@@ -49,7 +49,7 @@ def process_data():
 # function to write tuples to json from pandas group by
 # using two group by statements.
 def json_tuple_writer(group,name,filename,definition):
-    api.write("|"+name+"|"+filename+"|"+definition+"|\n")
+    api.write("|"+filename+"|"+definition+"|\n")
     jsonstr = '[\n'
     namevalue = ''
     for rownum,(indx,val) in enumerate(group.iteritems()):                
@@ -75,7 +75,7 @@ def json_tuple_writer(group,name,filename,definition):
 
 # function to write JSON from pandas groupby
 def json_writer(group,name,filename,definition):
-    api.write("|"+name+"|"+filename+"|"+definition+"|\n")
+    api.write("|"+filename+"|"+definition+"|\n")
     jsonstr = '[\n'
     for (rownum,val) in enumerate(group.iteritems()):                        
         jsonstr+="\t{"
@@ -156,9 +156,10 @@ def group_data():
 
 # global variables
 api = open("api.md","w")
-api.write("#API\n")
+api.write("# API\n\n")
 api.write("Amphibian Disease Portal API Documentation\n")
-api.write("|entity name|filename|definition|\n")
+api.write("|filename|definition|\n")
+api.write("|----|---|\n")
 filename = 'data/temp_output.xlsx'
 processed_filename = 'data/temp_output_processed.xlsx'
 
