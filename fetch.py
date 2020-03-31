@@ -48,7 +48,8 @@ def process_data():
 
 # function to write tuples to json from pandas group by
 # using two group by statements.
-def json_tuple_writer(group,name,filename):
+def json_tuple_writer(group,name,filename,definition):
+    api.write("|"+name+"|"+filename+"|"+definition+"|\n")
     jsonstr = '[\n'
     namevalue = ''
     for rownum,(indx,val) in enumerate(group.iteritems()):                
@@ -73,7 +74,8 @@ def json_tuple_writer(group,name,filename):
         f.write(jsonstr)
 
 # function to write JSON from pandas groupby
-def json_writer(group,name,filename):
+def json_writer(group,name,filename,definition):
+    api.write("|"+name+"|"+filename+"|"+definition+"|\n")
     jsonstr = '[\n'
     for (rownum,val) in enumerate(group.iteritems()):                        
         jsonstr+="\t{"
@@ -87,6 +89,7 @@ def json_writer(group,name,filename):
     with open(filename,'w') as f:
         f.write(jsonstr)
 
+    
 def run_grouped_data(df,name):
     
     bd = df.diseaseTested.str.contains('Bd')
@@ -97,35 +100,29 @@ def run_grouped_data(df,name):
     
     # groupby, filter on Bd,Bsal,Both for name
     group = df.groupby(name)[name].size()    
-    json_writer(group,name,'data/'+name+'_Both.json')      
+    json_writer(group,name,'data/'+name+'_Both.json','Bd and Bsal counts grouped by '+name)      
     
     group = bd.groupby(name)[name].size()
-    json_writer(group,name,'data/'+name+'_Bd.json')  
+    json_writer(group,name,'data/'+name+'_Bd.json','Bd counts grouped by '+name)  
     
     group = bsal.groupby(name)[name].size()
-    json_writer(group,name,'data/'+name+'_Bsal.json')  
+    json_writer(group,name,'data/'+name+'_Bsal.json','Bsal counts grouped by '+name)  
 
     # groupby, filter on Bd,Bsal,Both for name+diseaseDetected
     group = df.groupby([name,'diseaseDetected']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Both.json')
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Both.json','Bd and Bsal counts grouped by presence-abscense and by '+name)
     
     group = bd.groupby([name,'diseaseDetected']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bd.json')
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bd.json','Bd counts grouped by presence-abscense and by '+name)
     
     group = bd.groupby([name,'diseaseDetected']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bsal.json')
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bsal.json','Bsal counts grouped by presence-abscense and by '+name)
     
     # groupby, filter on Bd,Bsal,Both for name+diseaseTested         
     group = df.groupby([name,'diseaseTested']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Both.json')
+    json_tuple_writer(group,name,'data/'+name+'_Both_stacked.json','Bd and Bsal counts for a stacked chart, grouped by '+name)
     
-    group = bd.groupby([name,'diseaseTested']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Bd.json')
-    
-    group = bsal.groupby([name,'diseaseTested']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Bsal.json')
-    
-        
+            
 def group_data():  
     print("reading processed data ...")
     df = pd.read_excel(processed_filename)
@@ -143,23 +140,31 @@ def group_data():
     bsal = df.diseaseTested.str.contains('Bsal')
     bsal = df[bsal]  
     
-    # diseaseDetected, 
+    # diseaseDetected
     group = df.groupby('diseaseDetected')['diseaseDetected'].size()
-    json_writer(group,'diseaseDetected','data/diseaseDetected_Both.json')
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Both.json','Bd and Bsal counts grouped by presence-absence')
     
     group = bd.groupby('diseaseDetected')['diseaseDetected'].size()
-    json_writer(group,'diseaseDetected','data/diseaseDetected_Bd.json')
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Bd.json','Bd counts grouped by presence-absence')
     
     group = bsal.groupby('diseaseDetected')['diseaseDetected'].size()
-    json_writer(group,'diseaseDetected','data/diseaseDetected_Bsal.json')
-    
-    
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Bsal.json','Bsal counts grouped by presence-absence')
+        
     # diseaseTested
     group = df.groupby('diseaseTested')['diseaseTested'].size()
-    json_writer(group,'diseaseTested','data/diseaseTested_Both.json')    
+    json_writer(group,'diseaseTested','data/diseaseTested_Both.json','Bd and Bsal counts')    
 
+# global variables
+api = open("api.md","w")
+api.write("#API\n")
+api.write("Amphibian Disease Portal API Documentation\n")
+api.write("|entity name|filename|definition|\n")
 filename = 'data/temp_output.xlsx'
 processed_filename = 'data/temp_output_processed.xlsx'
+
 #fetch_data()
 process_data()
 group_data()
+
+api.close()
+
