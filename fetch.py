@@ -88,43 +88,75 @@ def json_writer(group,name,filename):
         f.write(jsonstr)
 
 def run_grouped_data(df,name):
-    group = df.groupby(name)[name].size()    
-    json_writer(group,name,'data/'+name+'_Both.json')  
     
     bd = df.diseaseTested.str.contains('Bd')
-    bd = df[bd]    
+    bd = df[bd]  
+    
+    bsal = df.diseaseTested.str.contains('Bsal')
+    bsal = df[bsal]  
+    
+    # groupby, filter on Bd,Bsal,Both for name
+    group = df.groupby(name)[name].size()    
+    json_writer(group,name,'data/'+name+'_Both.json')      
+    
     group = bd.groupby(name)[name].size()
     json_writer(group,name,'data/'+name+'_Bd.json')  
     
-    bsal = df.diseaseTested.str.contains('Bsal')
-    bsal = df[bsal]
     group = bsal.groupby(name)[name].size()
     json_writer(group,name,'data/'+name+'_Bsal.json')  
-            
-    group = df.groupby([name,'diseaseTested']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseTested.json')
-    
+
+    # groupby, filter on Bd,Bsal,Both for name+diseaseDetected
     group = df.groupby([name,'diseaseDetected']).size()
-    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected.json')
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Both.json')
+    
+    group = bd.groupby([name,'diseaseDetected']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bd.json')
+    
+    group = bd.groupby([name,'diseaseDetected']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bsal.json')
+    
+    # groupby, filter on Bd,Bsal,Both for name+diseaseTested         
+    group = df.groupby([name,'diseaseTested']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Both.json')
+    
+    group = bd.groupby([name,'diseaseTested']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Bd.json')
+    
+    group = bsal.groupby([name,'diseaseTested']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseTested_Bsal.json')
+    
         
 def group_data():  
     print("reading processed data ...")
     df = pd.read_excel(processed_filename)
     
-    print("grouping results ...")
-    
+    print("grouping results ...")    
     # genus, country, yearCollected results
     run_grouped_data(df,'genus')
     run_grouped_data(df,'country')
     run_grouped_data(df,'yearCollected')
 
-    # diseaseDetected
+    # summary tables for diseaseDetected and diseaseTested
+    bd = df.diseaseTested.str.contains('Bd')
+    bd = df[bd]  
+    
+    bsal = df.diseaseTested.str.contains('Bsal')
+    bsal = df[bsal]  
+    
+    # diseaseDetected, 
     group = df.groupby('diseaseDetected')['diseaseDetected'].size()
-    json_writer(group,'diseaseDetected','data/diseaseDetected.json')
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Both.json')
+    
+    group = bd.groupby('diseaseDetected')['diseaseDetected'].size()
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Bd.json')
+    
+    group = bsal.groupby('diseaseDetected')['diseaseDetected'].size()
+    json_writer(group,'diseaseDetected','data/diseaseDetected_Bsal.json')
+    
     
     # diseaseTested
     group = df.groupby('diseaseTested')['diseaseTested'].size()
-    json_writer(group,'diseaseTested','data/diseaseTested.json')    
+    json_writer(group,'diseaseTested','data/diseaseTested_Both.json')    
 
 filename = 'data/temp_output.xlsx'
 processed_filename = 'data/temp_output_processed.xlsx'
