@@ -1,6 +1,9 @@
-#API
+# API
+
 Amphibian Disease Portal API Documentation
+
 |entity name|filename|definition|
+|---|---|---|
 |genus|data/genus_Both.json|Bd and Bsal counts grouped by genus|
 |genus|data/genus_Bd.json|Bd counts grouped by genus|
 |genus|data/genus_Bsal.json|Bsal counts grouped by genus|
