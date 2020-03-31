@@ -28,28 +28,106 @@ def fetch_data():
 
 
 def process_data():
-    print("processing data...")
-    # read the excel file url into a dataframe using pandas
+    print("processing data...")    
     SamplesDF = pd.read_excel(filename,sheet_name='Samples')
-    #SamplesDF.to_excel("data/temp_samples.xlsx")
     EventsDF = pd.read_excel(filename,sheet_name='Events')
-    #EventsDF.to_excel("data/temp_events.xlsx")
     DiagnosticsDF = pd.read_excel(filename,sheet_name='Diagnostics')
-    #DiagnosticsDF.to_excel("data/temp_diagnostics.xlsx")
 
-    print("grouping results ...")
-    group = SamplesDF.groupby('genus')['genus'].count()
-    group.to_json(r'data/genus.json')
+    SamplesDF.materialSampleID = SamplesDF.materialSampleID.astype(str)
+    DiagnosticsDF.materialSampleID = DiagnosticsDF.materialSampleID.astype(str)
+    SamplesDF.eventID = SamplesDF.eventID.astype(str)
+    EventsDF.eventID = EventsDF.eventID.astype(str)
 
-    group = EventsDF.groupby('country')['country'].count()
-    group.to_json(r'data/country.json')
+    SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
+    SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
     
-    group = EventsDF.groupby('yearCollected')['yearCollected'].count()
-    group.to_json(r'data/yearCollected.json')
+    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected']]
+    SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
+    
+    SamplesDF.to_excel(processed_filename)
 
-    group = DiagnosticsDF.groupby('diseaseDetected')['diseaseDetected'].count()
-    group.to_json(r'data/diseaseDetected.json')
+# function to write tuples to json from pandas group by
+# using two group by statements.
+def json_tuple_writer(group,name,filename):
+    jsonstr = '[\n'
+    namevalue = ''
+    for rownum,(indx,val) in enumerate(group.iteritems()):                
+        
+        thisnamevalue = str(indx[0])
+        
+        if (namevalue != thisnamevalue):
+            jsonstr+="\t{"
+            jsonstr+="\""+name+"\":\""+thisnamevalue+"\","            
+            jsonstr+="\""+str(indx[1])+"\":"+str(val)  
+            jsonstr+="},\n"                   
+        else:
+            jsonstr = jsonstr.rstrip("},\n")
+            jsonstr+=",\""+str(indx[1])+"\":"+str(val)
+            jsonstr+="},\n"                           
+        
+        namevalue = thisnamevalue                
+        
+    jsonstr = jsonstr.rstrip(',\n')
+    jsonstr += '\n]'
+    with open(filename,'w') as f:
+        f.write(jsonstr)
+
+# function to write JSON from pandas groupby
+def json_writer(group,name,filename):
+    jsonstr = '[\n'
+    for (rownum,val) in enumerate(group.iteritems()):                        
+        jsonstr+="\t{"
+        jsonstr+="\""+name+"\":\""+str(val[0])+"\","            
+        jsonstr+="\"value\":"+str(val[1])  
+        jsonstr+="},\n"                   
+        
+        
+    jsonstr = jsonstr.rstrip(',\n')
+    jsonstr += '\n]'
+    with open(filename,'w') as f:
+        f.write(jsonstr)
+
+def run_grouped_data(df,name):
+    group = df.groupby(name)[name].size()    
+    json_writer(group,name,'data/'+name+'_Both.json')  
+    
+    bd = df.diseaseTested.str.contains('Bd')
+    bd = df[bd]    
+    group = bd.groupby(name)[name].size()
+    json_writer(group,name,'data/'+name+'_Bd.json')  
+    
+    bsal = df.diseaseTested.str.contains('Bsal')
+    bsal = df[bsal]
+    group = bsal.groupby(name)[name].size()
+    json_writer(group,name,'data/'+name+'_Bsal.json')  
+            
+    group = df.groupby([name,'diseaseTested']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseTested.json')
+    
+    group = df.groupby([name,'diseaseDetected']).size()
+    json_tuple_writer(group,name,'data/'+name+'_diseaseDetected.json')
+        
+def group_data():  
+    print("reading processed data ...")
+    df = pd.read_excel(processed_filename)
+    
+    print("grouping results ...")
+    
+    # genus, country, yearCollected results
+    run_grouped_data(df,'genus')
+    run_grouped_data(df,'country')
+    run_grouped_data(df,'yearCollected')
+
+    # diseaseDetected
+    group = df.groupby('diseaseDetected')['diseaseDetected'].size()
+    json_writer(group,'diseaseDetected','data/diseaseDetected.json')
+    
+    # diseaseTested
+    group = df.groupby('diseaseTested')['diseaseTested'].size()
+    json_writer(group,'diseaseTested','data/diseaseTested.json')    
 
 filename = 'data/temp_output.xlsx'
-fetch_data()
+processed_filename = 'data/temp_output_processed.xlsx'
+#fetch_data()
 process_data()
+group_data()
