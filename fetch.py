@@ -43,6 +43,8 @@ def process_data():
     
     SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected']]
     SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
+    SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
+
     
     SamplesDF.to_excel(processed_filename)
 
@@ -130,6 +132,7 @@ def group_data():
     print("grouping results ...")    
     # genus, country, yearCollected results
     run_grouped_data(df,'genus')
+    run_grouped_data(df,'scientificName')
     run_grouped_data(df,'country')
     run_grouped_data(df,'yearCollected')
 
