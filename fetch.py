@@ -41,10 +41,9 @@ def process_data():
     SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
     SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
     
-    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected']]
+    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']]
     SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
     SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
-
     
     SamplesDF.to_excel(processed_filename)
 
@@ -60,24 +59,64 @@ def json_tuple_writer(group,name,filename,definition):
         
         if (namevalue != thisnamevalue):
             jsonstr+="\t{"
-            jsonstr+="\""+name+"\":\""+thisnamevalue+"\","            
+            jsonstr+="\""+name+"\":\""+thisnamevalue+"\","
             jsonstr+="\""+str(indx[1])+"\":"+str(val)  
             jsonstr+="},\n"                   
         else:
             jsonstr = jsonstr.rstrip("},\n")
-            jsonstr+=",\""+str(indx[1])+"\":"+str(val)
+            jsonstr+=",\""+str(indx[1])+"\":"+str(val)  
             jsonstr+="},\n"                           
         
         namevalue = thisnamevalue                
         
     jsonstr = jsonstr.rstrip(',\n')
+
     jsonstr += '\n]'
     with open(filename,'w') as f:
         f.write(jsonstr)
+        
+        
+# function to write tuples to json from pandas group by
+# using two group by statements.
+def json_tuple_writer_scientificName_projectId(group,name):
+    projectId = ''
+    thisprojectId = ''
+    jsonstr = ''
+    firsttime = True
+    for rownum,(indx,val) in enumerate(group.iteritems()):  
+        #print(str(indx[0]),str(indx[1]), str(val))              
+        thisprojectId = str(indx[0])
+        if (projectId != thisprojectId):
+            # End of file
+            if firsttime == False:                
+                jsonstr = jsonstr.rstrip(',\n')
+                jsonstr += "\n]"            
+                with open('data/scientificName_projectId_' + projectId + ".json",'w') as f:
+                    f.write(jsonstr)                      
+            # Beginning of file
+            jsonstr = "[\n"
+            jsonstr += ("\t{\"" + str(indx[1]) + "\":"+str(val) +"},\n" )
+
+            api.write("|data/scientificName_projectId_"+thisprojectId +".json|unique scientificName count for project "+thisprojectId+"|\n")                
+        else:                        
+            jsonstr += ("\t{\"" + str(indx[1]) + "\":"+str(val) +"},\n" )
+            
+        projectId = thisprojectId
+
+        
+        firsttime = False            
+    
+    # write the last one
+    jsonstr = jsonstr.rstrip(',\n')
+    jsonstr += "\n]"
+    with open('data/scientificName_' + thisprojectId,'w') as f:
+                f.write(jsonstr)        
+         
 
 # function to write JSON from pandas groupby
 def json_writer(group,name,filename,definition):
     api.write("|"+filename+"|"+definition+"|\n")
+    
     jsonstr = '[\n'
     for (rownum,val) in enumerate(group.iteritems()):                        
         jsonstr+="\t{"
@@ -156,6 +195,11 @@ def group_data():
     # diseaseTested
     group = df.groupby('diseaseTested')['diseaseTested'].size()
     json_writer(group,'diseaseTested','data/diseaseTested_Both.json','Bd and Bsal counts')    
+    
+    # scientificName by projectId
+    group = df.groupby(['projectId','scientificName']).size()
+    json_tuple_writer_scientificName_projectId(group,'projectId')
+
 
 # global variables
 api = open("api.md","w")
@@ -165,6 +209,7 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 filename = 'data/temp_output.xlsx'
 processed_filename = 'data/temp_output_processed.xlsx'
+
 
 #fetch_data()
 process_data()
