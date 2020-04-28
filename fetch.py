@@ -18,7 +18,9 @@ def fetch_data():
         if (projectConfigurationID == amphibianDiseaseTeamID):
             projects.append(project["projectId"])
     projectsString = "["+ ','.join(str(e) for e in projects) + "]"
-
+    
+    print(projectsString)
+    
     # get the initial URL
     url="https://api.geome-db.org/records/Sample/excel?networkId=1&q=_projects_:" + projectsString +"+_select_:%5BEvent,Sample,Diagnostics%5D"
     r = requests.get(url)
