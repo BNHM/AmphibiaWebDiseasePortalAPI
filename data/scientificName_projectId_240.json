@@ -1,7 +1,7 @@
 [
-	{"Bryophryne sp.":4},
-	{"Bryophryne zonalis":6},
-	{"Gastrotheca excubitor":10},
-	{"Pleurodema marmoratum":1},
-	{"Psychrophrynella chirihampatu":49}
+	{"scientificName":"Bryophryne sp.","value":4},
+	{"scientificName":"Bryophryne zonalis","value":6},
+	{"scientificName":"Gastrotheca excubitor","value":10},
+	{"scientificName":"Pleurodema marmoratum","value":1},
+	{"scientificName":"Psychrophrynella chirihampatu","value":49}
 ]

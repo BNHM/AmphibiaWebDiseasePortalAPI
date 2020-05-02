@@ -97,11 +97,12 @@ def json_tuple_writer_scientificName_projectId(group,name):
                     f.write(jsonstr)                      
             # Beginning of file
             jsonstr = "[\n"
-            jsonstr += ("\t{\"" + str(indx[1]) + "\":"+str(val) +"},\n" )
+            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]) + "\",\"value\":"+str(val) +"},\n" )
 
             api.write("|data/scientificName_projectId_"+thisprojectId +".json|unique scientificName count for project "+thisprojectId+"|\n")                
-        else:                        
-            jsonstr += ("\t{\"" + str(indx[1]) + "\":"+str(val) +"},\n" )
+        else:                                    
+            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]) + "\",\"value\":"+str(val) +"},\n" )
+
             
         projectId = thisprojectId
 
@@ -111,7 +112,7 @@ def json_tuple_writer_scientificName_projectId(group,name):
     # write the last one
     jsonstr = jsonstr.rstrip(',\n')
     jsonstr += "\n]"
-    with open('data/scientificName_' + thisprojectId,'w') as f:
+    with open('data/scientificName_projectID_' + thisprojectId +".json",'w') as f:
                 f.write(jsonstr)        
          
 

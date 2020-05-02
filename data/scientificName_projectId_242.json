@@ -1,10 +1,10 @@
 [
-	{"Gastrotheca excubitor":28},
-	{"Gastrotheca nebulanastes":15},
-	{"Hypsiboas gladiator":103},
-	{"Pristimantis danae":99},
-	{"Pristimantis pharangobates":111},
-	{"Pristimantis platydactylus":125},
-	{"Pristimantis toftae":14},
-	{"Psychrophrynella usurpator":48}
+	{"scientificName":"Gastrotheca excubitor","value":28},
+	{"scientificName":"Gastrotheca nebulanastes","value":15},
+	{"scientificName":"Hypsiboas gladiator","value":103},
+	{"scientificName":"Pristimantis danae","value":99},
+	{"scientificName":"Pristimantis pharangobates","value":111},
+	{"scientificName":"Pristimantis platydactylus","value":125},
+	{"scientificName":"Pristimantis toftae","value":14},
+	{"scientificName":"Psychrophrynella usurpator","value":48}
 ]

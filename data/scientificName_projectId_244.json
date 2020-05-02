@@ -1,8 +1,8 @@
 [
-	{"Taricha Granulosa":1},
-	{"Taricha Torosa":10},
-	{"Taricha granulosa":1226},
-	{"Taricha rivularis":293},
-	{"Taricha sierrae":179},
-	{"Taricha torosa":1209}
+	{"scientificName":"Taricha Granulosa","value":1},
+	{"scientificName":"Taricha Torosa","value":10},
+	{"scientificName":"Taricha granulosa","value":1226},
+	{"scientificName":"Taricha rivularis","value":293},
+	{"scientificName":"Taricha sierrae","value":179},
+	{"scientificName":"Taricha torosa","value":1209}
 ]

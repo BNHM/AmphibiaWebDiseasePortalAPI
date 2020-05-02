@@ -1,8 +1,8 @@
 [
-	{"Aneides lugubris":22},
-	{"Batrachoseps attenuatus":42},
-	{"Batrachoseps major":96},
-	{"Batrachoseps nigriventris":88},
-	{"Batrachoseps pacificus":281},
-	{"Pseudacris regilla":127}
+	{"scientificName":"Aneides lugubris","value":22},
+	{"scientificName":"Batrachoseps attenuatus","value":42},
+	{"scientificName":"Batrachoseps major","value":96},
+	{"scientificName":"Batrachoseps nigriventris","value":88},
+	{"scientificName":"Batrachoseps pacificus","value":281},
+	{"scientificName":"Pseudacris regilla","value":127}
 ]
