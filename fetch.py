@@ -159,7 +159,7 @@ def run_grouped_data(df,name):
     group = bd.groupby([name,'diseaseDetected']).size()
     json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bd.json','Bd counts grouped by presence-abscense and by '+name)
     
-    group = bd.groupby([name,'diseaseDetected']).size()
+    group = bsal.groupby([name,'diseaseDetected']).size()
     json_tuple_writer(group,name,'data/'+name+'_diseaseDetected_Bsal.json','Bsal counts grouped by presence-abscense and by '+name)
     
     # groupby, filter on Bd,Bsal,Both for name+diseaseTested         
