@@ -112,7 +112,7 @@ def json_tuple_writer_scientificName_projectId(group,name):
     # write the last one
     jsonstr = jsonstr.rstrip(',\n')
     jsonstr += "\n]"
-    with open('data/scientificName_projectID_' + thisprojectId +".json",'w') as f:
+    with open('data/scientificName_projectId_' + thisprojectId +".json",'w') as f:
                 f.write(jsonstr)        
          
 
