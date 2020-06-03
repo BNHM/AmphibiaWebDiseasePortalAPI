@@ -214,7 +214,7 @@ filename = 'data/temp_output.xlsx'
 processed_filename = 'data/temp_output_processed.xlsx'
 
 
-#fetch_data()
+fetch_data()
 process_data()
 group_data()
 
