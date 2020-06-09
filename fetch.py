@@ -5,6 +5,19 @@ import xlrd
 import pandas as pd
 import urllib.request
 
+# hold scientificName objects which 
+class scientificNames:
+    def __init__(self, name):  
+        self.name = name  
+        self.projects = list()
+    def add_project(self, projectCounter):
+        self.projects.append(projectCounter) 
+        
+class projectCounter:
+    def __init__(self, projectId, count):  
+        self.projectId = projectId
+        self.count = count
+
 def fetch_data():
     print("fetching data...")
     # populate proejcts array with a complete list of project IDs 
@@ -43,7 +56,7 @@ def process_data():
     SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
     SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
     
-    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']]
+    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','family','projectId']]
     SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
     SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
     
@@ -115,7 +128,53 @@ def json_tuple_writer_scientificName_projectId(group,name):
     with open('data/scientificName_projectId_' + thisprojectId +".json",'w') as f:
                 f.write(jsonstr)        
          
+# Create a file for each scientificName listing the projects that it occurs in.
+def json_tuple_writer_scientificName_listing(group,name,df):
+    scientificName = ''
+    thisscientificName = ''
+    jsonstr = ''
+    firsttime = True
+    scientificNameList = list()
+    s = scientificNames('')
+    
+    # loop all grouped names & projects and populate list of objects
+    # from these we will construct JSONS downstream
+    for rownum,(indx,val) in enumerate(group.iteritems()):          
+        thisscientificName = str(indx[0])
+        projectId = str(indx[1])
+        count = str(val)                              
+        if (scientificName != thisscientificName): 
+            if firsttime:
+                s = scientificNames(thisscientificName)             
+                s.add_project(projectCounter(projectId,count)) 
+            else:    
+                scientificNameList.append(s)
+                s = scientificNames(thisscientificName)       
+                s.add_project(projectCounter(projectId,count))                                                       
+        else:
+            s.add_project(projectCounter(projectId,count))         
+        scientificName = thisscientificName    
+        firsttime = False    
 
+    # construct JSON output
+    # TODO: we have a df object accessible here, so we can lookup species information that we fetched.
+    # an example of what this looks like:
+    # myfilter = df.query('scientificName==\"'+sciName.name+'\"',inplace=False)       
+    # print(myfilter['family'].iloc[0] + ":" + sciName.name)
+    jsonstr = ("[\n")
+    for sciName in scientificNameList:                
+        jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , \"associatedProjects\" : [" )
+        for project in sciName.projects:
+            jsonstr += ("{\"projectId\" : \"" + project.projectId + "\" , \"count\" : " + project.count  + "},")
+        jsonstr = (jsonstr.rstrip(','))        
+        jsonstr += ("]},\n")
+    jsonstr = (jsonstr.rstrip(',\n'))        
+    jsonstr += ("]")
+                
+    with open('data/scientificName_listing.json','w') as f:
+        f.write(jsonstr) 
+    api.write("|scientificName_listing.json|All scientific names and the projects that they appear in|\n")
+        
 # function to write JSON from pandas groupby
 def json_writer(group,name,filename,definition):
     api.write("|"+filename+"|"+definition+"|\n")
@@ -166,6 +225,7 @@ def run_grouped_data(df,name):
     group = df.groupby([name,'diseaseTested']).size()
     json_tuple_writer(group,name,'data/'+name+'_Both_stacked.json','Bd and Bsal counts for a stacked chart, grouped by '+name)
     
+
             
 def group_data():  
     print("reading processed data ...")
@@ -185,6 +245,7 @@ def group_data():
     bsal = df.diseaseTested.str.contains('Bsal')
     bsal = df[bsal]  
     
+
     # diseaseDetected
     group = df.groupby('diseaseDetected')['diseaseDetected'].size()
     json_writer(group,'diseaseDetected','data/diseaseDetected_Both.json','Bd and Bsal counts grouped by presence-absence')
@@ -202,7 +263,10 @@ def group_data():
     # scientificName by projectId
     group = df.groupby(['projectId','scientificName']).size()
     json_tuple_writer_scientificName_projectId(group,'projectId')
-
+    
+    # scientificName listing
+    group = df.groupby(['scientificName','projectId']).size()
+    json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
 # global variables
 api = open("api.md","w")
@@ -220,3 +284,5 @@ group_data()
 
 api.close()
 
+
+       

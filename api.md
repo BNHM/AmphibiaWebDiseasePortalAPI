@@ -49,3 +49,5 @@ Amphibian Disease Portal API Documentation
 |data/scientificName_projectId_255.json|unique scientificName count for project 255|
 |data/scientificName_projectId_286.json|unique scientificName count for project 286|
 |data/scientificName_projectId_290.json|unique scientificName count for project 290|
+|data/scientificName_projectId_295.json|unique scientificName count for project 295|
+|scientificName_listing.json|All scientific names and the projects that they appear in|
