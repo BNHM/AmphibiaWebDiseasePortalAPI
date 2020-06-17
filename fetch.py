@@ -56,11 +56,13 @@ def process_data():
     SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
     SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
     
-    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','family','projectId']]
+    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']]
     SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
     SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
     
-    SamplesDF.to_excel(processed_filename)
+    SamplesDF.to_excel(processed_filename,index=False)
+    SamplesDF.to_csv(processed_csv_filename,index=False)
+
 
 # function to write tuples to json from pandas group by
 # using two group by statements.
@@ -275,7 +277,9 @@ api.write("Amphibian Disease Portal API Documentation\n")
 api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 filename = 'data/temp_output.xlsx'
-processed_filename = 'data/temp_output_processed.xlsx'
+processed_filename = 'data/amphibian_disease_data_processed.xlsx'
+processed_csv_filename = 'data/amphibian_disease_data_processed.csv'
+
 
 
 fetch_data()
