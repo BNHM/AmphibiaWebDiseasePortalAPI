@@ -56,13 +56,17 @@ def process_data():
     SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
     SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
     
-    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']]
+    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId','bcid']]
     SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
     SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
-    
+    SamplesDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + SamplesDF['projectId'].astype(str)
+        
     SamplesDF.to_excel(processed_filename,index=False)
-    SamplesDF.to_csv(processed_csv_filename,index=False)
-
+    
+    # Create a compressed output file so people can view a limited set of columns for the complete dataset
+    columnsTitlesOutput = ['materialSampleID','scientificName','diseaseTested','diseaseDetected','country','yearCollected','bcid','projectURL']
+    SamplesDFOutput = SamplesDF.reindex(columns=columnsTitlesOutput)
+    SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")     
 
 # function to write tuples to json from pandas group by
 # using two group by statements.
@@ -278,9 +282,7 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 filename = 'data/temp_output.xlsx'
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
-processed_csv_filename = 'data/amphibian_disease_data_processed.csv'
-
-
+processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
 fetch_data()
 process_data()
