@@ -1,6 +1,6 @@
 [
 	{"country":"Argentina","True":1},
-	{"country":"Australia","False":1173,"True":599},
+	{"country":"Australia","False":1300,"True":599},
 	{"country":"Belgium","True":31},
 	{"country":"Brazil","True":3},
 	{"country":"Burundi","True":7},
@@ -9,7 +9,7 @@
 	{"country":"Canada","False":30,"True":2},
 	{"country":"China","False":166,"True":8},
 	{"country":"Colombia","True":2},
-	{"country":"Costa Rica","False":1305,"True":136},
+	{"country":"Costa Rica","False":1317,"True":136},
 	{"country":"Ecuador","True":7},
 	{"country":"Equatorial Guinea","True":1},
 	{"country":"Ethiopia","True":1},
@@ -42,7 +42,7 @@
 	{"country":"Spain","True":7},
 	{"country":"Sri Lanka","False":109},
 	{"country":"Switzerland","True":1},
-	{"country":"USA","False":12677,"True":1714},
+	{"country":"USA","False":24140,"True":1830},
 	{"country":"United Kingdom","False":84},
 	{"country":"Venezuela","True":1},
 	{"country":"Vietnam","False":554,"True":15}

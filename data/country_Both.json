@@ -1,6 +1,6 @@
 [
 	{"country":"Argentina","value":1},
-	{"country":"Australia","value":1772},
+	{"country":"Australia","value":1899},
 	{"country":"Belgium","value":31},
 	{"country":"Brazil","value":3},
 	{"country":"Burundi","value":7},
@@ -9,7 +9,7 @@
 	{"country":"Canada","value":32},
 	{"country":"China","value":174},
 	{"country":"Colombia","value":2},
-	{"country":"Costa Rica","value":1441},
+	{"country":"Costa Rica","value":1453},
 	{"country":"Ecuador","value":7},
 	{"country":"Equatorial Guinea","value":1},
 	{"country":"Ethiopia","value":1},
@@ -42,7 +42,7 @@
 	{"country":"Spain","value":7},
 	{"country":"Sri Lanka","value":109},
 	{"country":"Switzerland","value":1},
-	{"country":"USA","value":14391},
+	{"country":"USA","value":25970},
 	{"country":"United Kingdom","value":84},
 	{"country":"Venezuela","value":1},
 	{"country":"Vietnam","value":569}

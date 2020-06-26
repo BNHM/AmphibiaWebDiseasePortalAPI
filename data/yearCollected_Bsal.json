@@ -1,14 +1,18 @@
 [
-	{"yearCollected":"1965","value":1},
+	{"yearCollected":"1895","value":2},
+	{"yearCollected":"1897","value":14},
+	{"yearCollected":"1905","value":111},
+	{"yearCollected":"1964","value":11},
+	{"yearCollected":"1965","value":2},
 	{"yearCollected":"1970","value":1},
 	{"yearCollected":"1971","value":3},
 	{"yearCollected":"1972","value":5},
 	{"yearCollected":"2007","value":59},
 	{"yearCollected":"2008","value":5},
 	{"yearCollected":"2009","value":16},
-	{"yearCollected":"2013","value":268},
-	{"yearCollected":"2014","value":460},
-	{"yearCollected":"2015","value":176},
-	{"yearCollected":"2016","value":121},
-	{"yearCollected":"2017","value":52}
+	{"yearCollected":"2013","value":395},
+	{"yearCollected":"2014","value":509},
+	{"yearCollected":"2015","value":508},
+	{"yearCollected":"2016","value":7395},
+	{"yearCollected":"2017","value":3583}
 ]
