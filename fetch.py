@@ -36,7 +36,6 @@ def fetch_data():
     
     # get the initial URL
     url="https://api.geome-db.org/records/Sample/excel?networkId=1&q=_projects_:" + projectsString +"+_select_:%5BEvent,Sample,Diagnostics%5D"
-    print(url)
     r = requests.get(url)
 
     excel_file_url = json.loads(r.content)['url']
@@ -281,7 +280,7 @@ api.write("# API\n\n")
 api.write("Amphibian Disease Portal API Documentation\n")
 api.write("|filename|definition|\n")
 api.write("|----|---|\n")
-filename = 'data/temp_output.xlsx'
+filename = 'temp_output.xlsx'
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
