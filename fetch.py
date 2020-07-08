@@ -281,8 +281,8 @@ api.write("Amphibian Disease Portal API Documentation\n")
 api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 filename = 'temp_output.xlsx'
-processed_filename = 'data/amphibian_disease_data_processed.xlsx'
-processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
+processed_filename = 'amphibian_disease_data_processed.xlsx'
+processed_csv_filename_zipped = 'amphibian_disease_data_processed.csv.gz'
 
 fetch_data()
 process_data()
