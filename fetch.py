@@ -36,6 +36,7 @@ def fetch_data():
     
     # get the initial URL
     url="https://api.geome-db.org/records/Sample/excel?networkId=1&q=_projects_:" + projectsString +"+_select_:%5BEvent,Sample,Diagnostics%5D"
+    print(url)
     r = requests.get(url)
 
     excel_file_url = json.loads(r.content)['url']
