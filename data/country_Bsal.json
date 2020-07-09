@@ -1,11 +1,7 @@
 [
-	{"country":"Australia","value":127},
-	{"country":"Costa Rica","value":22},
-	{"country":"Italy","value":530},
-	{"country":"Laos","value":68},
+	{"country":"Italy","value":265},
 	{"country":"Mexico","value":17},
-	{"country":"Myanmar","value":12},
-	{"country":"Peru","value":262},
-	{"country":"USA","value":11539},
+	{"country":"Peru","value":131},
+	{"country":"USA","value":11299},
 	{"country":"United Kingdom","value":42}
 ]

@@ -1,18 +1,7 @@
 [
-	{"yearCollected":"1895","False":2},
-	{"yearCollected":"1897","False":14},
-	{"yearCollected":"1905","False":111},
-	{"yearCollected":"1964","False":11},
-	{"yearCollected":"1965","False":2},
-	{"yearCollected":"1970","False":1},
-	{"yearCollected":"1971","False":3},
-	{"yearCollected":"1972","False":5},
-	{"yearCollected":"2007","False":59},
-	{"yearCollected":"2008","False":5},
-	{"yearCollected":"2009","False":16},
-	{"yearCollected":"2013","False":395},
-	{"yearCollected":"2014","False":509},
-	{"yearCollected":"2015","False":508},
-	{"yearCollected":"2016","False":7395},
+	{"yearCollected":"2013","False":134},
+	{"yearCollected":"2014","False":279},
+	{"yearCollected":"2015","False":420},
+	{"yearCollected":"2016","False":7338},
 	{"yearCollected":"2017","False":3583}
 ]

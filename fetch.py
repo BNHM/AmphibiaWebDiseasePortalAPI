@@ -18,55 +18,48 @@ class projectCounter:
         self.projectId = projectId
         self.count = count
 
+# fetch data from GEOME that matches the Amphibian Disease TEAM and put into an easily queriable format.
 def fetch_data():
     print("fetching data...")
     # populate proejcts array with a complete list of project IDs 
     # for the amphibianDiseaseTeam
-    amphibianDiseaseTeamID = 45
-    projects = []
+    amphibianDiseaseTeamID = 45    
+    df = pd.DataFrame(columns = columns)
+     
+    # this will fetch a list of ALL projects from GEOME        
     url="https://api.geome-db.org/projects/stats?"
     r = requests.get(url)
     for project in json.loads(r.content):
         projectConfigurationID = project["projectConfiguration"]["id"]
+        # filter for just projects matching the teamID
         if (projectConfigurationID == amphibianDiseaseTeamID):
-            projects.append(project["projectId"])
-    projectsString = "["+ ','.join(str(e) for e in projects) + "]"
-    
-    print(projectsString)
-    
-    # get the initial URL
-    url="https://api.geome-db.org/records/Sample/excel?networkId=1&q=_projects_:" + projectsString +"+_select_:%5BEvent,Sample,Diagnostics%5D"
-    r = requests.get(url)
+            
+            url="https://api.geome-db.org/records/Event/excel?networkId=1&q=_projects_:" + str(project["projectId"]) + "+_select_:%5BSample,Diagnostics%5D"
+            r = requests.get(url)
 
-    excel_file_url = json.loads(r.content)['url']
-    urllib.request.urlretrieve(excel_file_url, filename)
-
-
-def process_data():
-    print("processing data...")    
-    SamplesDF = pd.read_excel(filename,sheet_name='Samples')
-    EventsDF = pd.read_excel(filename,sheet_name='Events')
-    DiagnosticsDF = pd.read_excel(filename,sheet_name='Diagnostics')
-
-    SamplesDF.materialSampleID = SamplesDF.materialSampleID.astype(str)
-    DiagnosticsDF.materialSampleID = DiagnosticsDF.materialSampleID.astype(str)
-    SamplesDF.eventID = SamplesDF.eventID.astype(str)
-    EventsDF.eventID = EventsDF.eventID.astype(str)
-
-    SamplesDF = SamplesDF.merge(DiagnosticsDF, how='outer', left_on='materialSampleID', right_on='materialSampleID')
-    SamplesDF = SamplesDF.merge(EventsDF, how='outer', left_on='eventID', right_on='eventID')
-    
-    SamplesDF = SamplesDF[['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId','bcid']]
-    SamplesDF['diseaseTested'] = SamplesDF['diseaseTested'].str.capitalize()
-    SamplesDF['scientificName'] = SamplesDF['genus'] + " " + SamplesDF['specificEpithet']
-    SamplesDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + SamplesDF['projectId'].astype(str)
-        
-    SamplesDF.to_excel(processed_filename,index=False)
-    
+            if (r.status_code == 204):
+                print ('no data found for project = ' + str(project["projectId"]))
+            else:
+                print("processing data for project = " + str(project["projectId"]))
+                
+                temp_file = 'data/project' + str(project["projectId"]) + ".xlsx"                
+                excel_file_url = json.loads(r.content)['url']
+                urllib.request.urlretrieve(excel_file_url, temp_file)
+                thisDF = pd.read_excel(temp_file,sheet_name='Samples')                                
+                thisDF = thisDF.reindex(columns=columns)
+                thisDF = thisDF.astype(str)
+                thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize()
+                thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
+                thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)
+                    
+                df = df.append(thisDF,sort=False)
+     
+    print("writing final data...")            
+    # write to an excel file, used for later processing
+    df.to_excel(processed_filename,index=False)    
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
-    columnsTitlesOutput = ['materialSampleID','scientificName','diseaseTested','diseaseDetected','country','yearCollected','bcid','projectURL']
-    SamplesDFOutput = SamplesDF.reindex(columns=columnsTitlesOutput)
-    SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")     
+    SamplesDFOutput = df.reindex(columns=columns)
+    SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")                                            
 
 # function to write tuples to json from pandas group by
 # using two group by statements.
@@ -274,21 +267,18 @@ def group_data():
     group = df.groupby(['scientificName','projectId']).size()
     json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
-# global variables
 api = open("api.md","w")
 api.write("# API\n\n")
 api.write("Amphibian Disease Portal API Documentation\n")
 api.write("|filename|definition|\n")
 api.write("|----|---|\n")
-filename = 'temp_output.xlsx'
-processed_filename = 'amphibian_disease_data_processed.xlsx'
-processed_csv_filename_zipped = 'amphibian_disease_data_processed.csv.gz'
+
+# global variables
+columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']
+processed_filename = 'data/amphibian_disease_data_processed.xlsx'
+processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
 fetch_data()
-process_data()
 group_data()
 
 api.close()
-
-
-       

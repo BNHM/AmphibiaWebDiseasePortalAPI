@@ -1,11 +1,7 @@
 [
-	{"country":"Australia","False":127},
-	{"country":"Costa Rica","False":22},
-	{"country":"Italy","False":530},
-	{"country":"Laos","False":68},
+	{"country":"Italy","False":265},
 	{"country":"Mexico","False":17},
-	{"country":"Myanmar","False":12},
-	{"country":"Peru","False":262},
-	{"country":"USA","False":11539},
+	{"country":"Peru","False":131},
+	{"country":"USA","False":11299},
 	{"country":"United Kingdom","False":42}
 ]

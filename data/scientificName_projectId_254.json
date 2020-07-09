@@ -1,12 +1,12 @@
 [
-	{"scientificName":"Bufo boreas","value":116},
-	{"scientificName":"Bufo canorus","value":4},
-	{"scientificName":"Pseudacris regilla","value":696},
-	{"scientificName":"Rana boylii","value":204},
-	{"scientificName":"Rana cascadae","value":2},
-	{"scientificName":"Rana catesbeiana","value":96},
-	{"scientificName":"Rana draytonii","value":2},
-	{"scientificName":"Rana muscosa","value":390},
-	{"scientificName":"Rana pipiens","value":8},
-	{"scientificName":"Rana sierrae","value":876}
+	{"scientificName":"Bufo boreas","value":58},
+	{"scientificName":"Bufo canorus","value":2},
+	{"scientificName":"Pseudacris regilla","value":348},
+	{"scientificName":"Rana boylii","value":102},
+	{"scientificName":"Rana cascadae","value":1},
+	{"scientificName":"Rana catesbeiana","value":48},
+	{"scientificName":"Rana draytonii","value":1},
+	{"scientificName":"Rana muscosa","value":195},
+	{"scientificName":"Rana pipiens","value":4},
+	{"scientificName":"Rana sierrae","value":438}
 ]

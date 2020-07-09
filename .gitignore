@@ -1,3 +1,4 @@
 data/temp_output.xlsx
 data/amphibian_disease_data_processed.xlsx
+data/*.xlsx
 .vscode/
