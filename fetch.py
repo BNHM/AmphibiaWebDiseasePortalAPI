@@ -48,7 +48,16 @@ def fetch_data():
                 thisDF = pd.read_excel(temp_file,sheet_name='Samples')                                
                 thisDF = thisDF.reindex(columns=columns)
                 thisDF = thisDF.astype(str)
-                thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize()            
+                thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize() 
+                
+                # remove unknown specificEpithet's
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.','')
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp','')
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf','') 
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf.','')
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')            
+            
+           
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
                 thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
 
@@ -307,7 +316,7 @@ columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','specifi
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
-#fetch_data()
+fetch_data()
 group_data()
 
 api.close()
