@@ -59,10 +59,13 @@ def fetch_data():
             
            
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
+                thisDF['scientificName'] = thisDF['scientificName'].str.strip()
+
                 thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
 
                 thisDF = synonymize(thisDF)
                 thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)
+                
                     
                 df = df.append(thisDF,sort=False)
      
