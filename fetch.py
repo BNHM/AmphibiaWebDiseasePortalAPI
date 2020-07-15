@@ -48,8 +48,11 @@ def fetch_data():
                 thisDF = pd.read_excel(temp_file,sheet_name='Samples')                                
                 thisDF = thisDF.reindex(columns=columns)
                 thisDF = thisDF.astype(str)
-                thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize()
+                thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize()            
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
+                thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
+
+                thisDF = synonymize(thisDF)
                 thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)
                     
                 df = df.append(thisDF,sort=False)
@@ -267,6 +270,32 @@ def group_data():
     group = df.groupby(['scientificName','projectId']).size()
     json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
+
+# function to grab latest amphibiaweb taxonomy
+def fetchAmphibianTaxonomy():
+    # TODO fetch from URL
+    #url="https://amphibiaweb.org/amphib_names.json"
+    #r = requests.get(url)
+    #return json.loads(r.content)
+
+    # Opening JSON file.  Temporary!
+    f = open('amphib_names.json',) 
+    return json.load(f) 
+
+# fill in scientificName in data frame with incoming taxonomy
+def synonymize(df):
+    taxonomy = fetchAmphibianTaxonomy()
+    synDict = {}
+    for species in taxonomy:
+        if (species['synonymies'] != ''):
+            synonym =  species['synonymies'].split(",") 
+            for x in synonym:
+                n = species['genus'] + " " + species['species'] 
+                synDict[x] = n
+    
+    df['scientificName'].replace(synDict, inplace=True)
+    return df
+
 api = open("api.md","w")
 api.write("# API\n\n")
 api.write("Amphibian Disease Portal API Documentation\n")
@@ -278,7 +307,7 @@ columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','specifi
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
-fetch_data()
+#fetch_data()
 group_data()
 
 api.close()
