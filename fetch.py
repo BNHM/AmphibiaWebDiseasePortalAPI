@@ -273,7 +273,7 @@ def group_data():
 
 # function to grab latest amphibiaweb taxonomy
 def fetchAmphibianTaxonomy():
-    # TODO fetch from URL
+    # TODO fetch from URL.  When i implement this i can remove the JSON file below...
     #url="https://amphibiaweb.org/amphib_names.json"
     #r = requests.get(url)
     #return json.loads(r.content)
