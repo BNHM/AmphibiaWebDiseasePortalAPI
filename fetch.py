@@ -78,6 +78,7 @@ def fetch_data():
     df.to_excel(processed_filename,index=False)    
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
     SamplesDFOutput = df.reindex(columns=columns)
+    api.write("|"+processed_csv_filename_zipped+"|Zipped version of all core metadata fields for every public project|\n")
     SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")                                            
 
 # function to grab latest amphibiaweb taxonomy
@@ -324,7 +325,7 @@ def group_data():
 
 api = open("api.md","w")
 api.write("# API\n\n")
-api.write("Amphibian Disease Portal API Documentation\n")
+api.write("Amphibian Disease Portal API Documentation.  The following files are updated every evening and can be called directly by pointing to their raw form in this github repository.\n")
 api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 
