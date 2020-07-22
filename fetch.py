@@ -35,6 +35,8 @@ def fetch_data():
         projectConfigurationID = project["projectConfiguration"]["id"]
         # filter for just projects matching the teamID
         if (projectConfigurationID == amphibianDiseaseTeamID):
+        # condition for testing a single project
+        #if (project["projectId"] == 255):
             
             url="https://api.geome-db.org/records/Event/excel?networkId=1&q=_projects_:" + str(project["projectId"]) + "+_select_:%5BSample,Diagnostics%5D"
             r = requests.get(url)
@@ -77,6 +79,39 @@ def fetch_data():
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
     SamplesDFOutput = df.reindex(columns=columns)
     SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")                                            
+
+# function to grab latest amphibiaweb taxonomy
+def fetchAmphibianTaxonomy():
+    # TODO fetch from URL.  When i implement this i can remove the JSON file below...
+    #url="https://amphibiaweb.org/amphib_names.json"
+    #r = requests.get(url)
+    #return json.loads(r.content)
+
+    # Opening JSON file.  Temporary!
+    f = open('amphib_names.json',) 
+    return json.load(f) 
+
+# update taxonomic fields using amphibiaweb taxonomy
+# updates scientificName using synonyms 
+# updates family and order using higher level taxonomy by searching on genus name
+def taxonomize(df):
+    taxonomy = fetchAmphibianTaxonomy()
+    synDict = {}
+    familyDict = {}
+    orderDict = {}
+    for species in taxonomy:                
+        familyDict[species['genus']] = species['family']
+        orderDict[species['genus']] = species['order']
+        if (species['synonymies'] != ''):
+            synonym =  species['synonymies'].split(",") 
+            for s in synonym:                  
+                synDict[s] = species['genus'] + " " + species['species']
+    
+    df['scientificName'].replace(synDict, inplace=True)
+    df['family'] = df['genus'].map(familyDict)
+    df['order'] = df['genus'].map(orderDict)
+
+    return df
 
 # function to write tuples to json from pandas group by
 # using two group by statements.
@@ -175,10 +210,6 @@ def json_tuple_writer_scientificName_listing(group,name,df):
         firsttime = False    
 
     # construct JSON output
-    # TODO: we have a df object accessible here, so we can lookup species information that we fetched.
-    # an example of what this looks like:
-    # myfilter = df.query('scientificName==\"'+sciName.name+'\"',inplace=False)       
-    # print(myfilter['family'].iloc[0] + ":" + sciName.name)
     jsonstr = ("[\n")
     for sciName in scientificNameList:                
         jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , ")
@@ -191,7 +222,7 @@ def json_tuple_writer_scientificName_listing(group,name,df):
         jsonstr = (jsonstr.rstrip(','))        
         jsonstr += ("]},\n")
     jsonstr = (jsonstr.rstrip(',\n'))        
-    jsonstr += ("]")
+    jsonstr += ("\n]")
                 
     with open('data/scientificName_listing.json','w') as f:
         f.write(jsonstr) 
@@ -254,7 +285,6 @@ def group_data():
     df = pd.read_excel(processed_filename)
     
     print("grouping results ...")  
-    print(df.family.unique())
     # genus, country, yearCollected results
     run_grouped_data(df,'genus')
     run_grouped_data(df,'scientificName')
@@ -292,39 +322,6 @@ def group_data():
     json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
 
-# function to grab latest amphibiaweb taxonomy
-def fetchAmphibianTaxonomy():
-    # TODO fetch from URL.  When i implement this i can remove the JSON file below...
-    #url="https://amphibiaweb.org/amphib_names.json"
-    #r = requests.get(url)
-    #return json.loads(r.content)
-
-    # Opening JSON file.  Temporary!
-    f = open('amphib_names.json',) 
-    return json.load(f) 
-
-# fill in scientificName in data frame with incoming taxonomy
-def taxonomize(df):
-    taxonomy = fetchAmphibianTaxonomy()
-    synDict = {}
-    familyDict = {}
-    orderDict = {}
-    for species in taxonomy:        
-        if (species['synonymies'] != ''):
-            synonym =  species['synonymies'].split(",") 
-            for x in synonym:
-                n = species['genus'] + " " + species['species'] 
-                synDict[x] = n
-    
-    df['scientificName'].replace(synDict, inplace=True)
-    
-    # now replace higher level taxonomy
-    for species in taxonomy:                
-        df.loc[(df.scientificName == species['genus'] + " "+ species['species']),'family']=species['family']
-        df.loc[(df.scientificName == species['genus'] + " "+ species['species']),'order']=species['order']
-    
-    return df
-
 api = open("api.md","w")
 api.write("# API\n\n")
 api.write("Amphibian Disease Portal API Documentation\n")
@@ -332,7 +329,7 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 
 # global variables
-columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','family','order','specificEpithet','country','yearCollected','projectId']
+columns = ['materialSampleID','diseaseTested','diseaseDetected','order','family','genus','specificEpithet','country','yearCollected','projectId']
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
