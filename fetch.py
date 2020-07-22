@@ -7,9 +7,11 @@ import urllib.request
 
 # hold scientificName objects which 
 class scientificNames:
-    def __init__(self, name):  
+    def __init__(self, name, family, order):  
         self.name = name  
         self.projects = list()
+        self.family = family
+        self.order = order
     def add_project(self, projectCounter):
         self.projects.append(projectCounter) 
         
@@ -63,7 +65,7 @@ def fetch_data():
 
                 thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
 
-                thisDF = synonymize(thisDF)
+                thisDF = taxonomize(thisDF)
                 thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)
                 
                     
@@ -149,21 +151,23 @@ def json_tuple_writer_scientificName_listing(group,name,df):
     jsonstr = ''
     firsttime = True
     scientificNameList = list()
-    s = scientificNames('')
+    s = scientificNames('','','')
     
     # loop all grouped names & projects and populate list of objects
     # from these we will construct JSONS downstream
     for rownum,(indx,val) in enumerate(group.iteritems()):          
         thisscientificName = str(indx[0])
-        projectId = str(indx[1])
+        thisfamily = str(indx[1])
+        thisorder = str(indx[2])
+        projectId = str(indx[3])
         count = str(val)                              
         if (scientificName != thisscientificName): 
             if firsttime:
-                s = scientificNames(thisscientificName)             
+                s = scientificNames(thisscientificName,thisfamily,thisorder)             
                 s.add_project(projectCounter(projectId,count)) 
             else:    
                 scientificNameList.append(s)
-                s = scientificNames(thisscientificName)       
+                s = scientificNames(thisscientificName,thisfamily,thisorder)       
                 s.add_project(projectCounter(projectId,count))                                                       
         else:
             s.add_project(projectCounter(projectId,count))         
@@ -177,7 +181,11 @@ def json_tuple_writer_scientificName_listing(group,name,df):
     # print(myfilter['family'].iloc[0] + ":" + sciName.name)
     jsonstr = ("[\n")
     for sciName in scientificNameList:                
-        jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , \"associatedProjects\" : [" )
+        jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , ")
+        jsonstr += ("\"order\" : \"" + sciName.order + "\" , ")
+        jsonstr += ("\"family\" : \"" + sciName.family + "\", ")
+
+        jsonstr += ("\"associatedProjects\" : [" )
         for project in sciName.projects:
             jsonstr += ("{\"projectId\" : \"" + project.projectId + "\" , \"count\" : " + project.count  + "},")
         jsonstr = (jsonstr.rstrip(','))        
@@ -245,7 +253,8 @@ def group_data():
     print("reading processed data ...")
     df = pd.read_excel(processed_filename)
     
-    print("grouping results ...")    
+    print("grouping results ...")  
+    print(df.family.unique())
     # genus, country, yearCollected results
     run_grouped_data(df,'genus')
     run_grouped_data(df,'scientificName')
@@ -279,7 +288,7 @@ def group_data():
     json_tuple_writer_scientificName_projectId(group,'projectId')
     
     # scientificName listing
-    group = df.groupby(['scientificName','projectId']).size()
+    group = df.groupby(['scientificName','family','order','projectId']).size()
     json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
 
@@ -295,10 +304,12 @@ def fetchAmphibianTaxonomy():
     return json.load(f) 
 
 # fill in scientificName in data frame with incoming taxonomy
-def synonymize(df):
+def taxonomize(df):
     taxonomy = fetchAmphibianTaxonomy()
     synDict = {}
-    for species in taxonomy:
+    familyDict = {}
+    orderDict = {}
+    for species in taxonomy:        
         if (species['synonymies'] != ''):
             synonym =  species['synonymies'].split(",") 
             for x in synonym:
@@ -306,6 +317,12 @@ def synonymize(df):
                 synDict[x] = n
     
     df['scientificName'].replace(synDict, inplace=True)
+    
+    # now replace higher level taxonomy
+    for species in taxonomy:                
+        df.loc[(df.scientificName == species['genus'] + " "+ species['species']),'family']=species['family']
+        df.loc[(df.scientificName == species['genus'] + " "+ species['species']),'order']=species['order']
+    
     return df
 
 api = open("api.md","w")
@@ -315,7 +332,7 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 
 # global variables
-columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','specificEpithet','country','yearCollected','projectId']
+columns = ['materialSampleID','diseaseTested','diseaseDetected','genus','family','order','specificEpithet','country','yearCollected','projectId']
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
