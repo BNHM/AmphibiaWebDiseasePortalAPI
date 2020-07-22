@@ -329,7 +329,7 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 
 # global variables
-columns = ['materialSampleID','diseaseTested','diseaseDetected','order','family','genus','specificEpithet','country','yearCollected','projectId']
+columns = ['materialSampleID','diseaseTested','diseaseDetected','order','family','genus','specificEpithet','country','decimalLatitude','decimalLongitude','yearCollected','projectId']
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
