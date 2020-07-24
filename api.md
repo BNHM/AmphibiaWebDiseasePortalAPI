@@ -1,6 +1,6 @@
 # API
 
-Amphibian Disease Portal API Documentation. The following files are updated every evening and can be called directly by pointing to their raw form in this github repository.
+Amphibian Disease Portal API Documentation.  The following files are updated every evening and can be called directly by pointing to their raw form in this github repository.
 |filename|definition|
 |----|---|
 |data/amphibian_disease_data_processed.csv.gz|Zipped version of all core metadata fields for every public project|
