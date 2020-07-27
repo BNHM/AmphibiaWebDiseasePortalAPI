@@ -109,6 +109,8 @@ def taxonomize(df):
                 synDict[s] = species['genus'] + " " + species['species']
     
     df['scientificName'].replace(synDict, inplace=True)
+    df['genus'] = df['scientificName'].str.split(" ").str[0]
+    df['specificEpithet'] = df['scientificName'].str.split(" ").str[1]
     df['family'] = df['genus'].map(familyDict)
     df['order'] = df['genus'].map(orderDict)
 
