@@ -1,16 +1,5 @@
 [
  {
-  "order":"",
-  "family":"Uncertain",
-  "genus":"Pristimantis",
-  "species":"chocoensis",
-  "common_name":"Choco’s robber frog",
-  "synonymies":"",
-  "iucn":"",
-  "aweb_uid":"9239",
-  "uri_guid":"https://amphibiaweb.org/species/9239"
- },
- {
   "order":"Anura",
   "family":"Allophrynidae",
   "genus":"Allophryne",
@@ -3943,7 +3932,7 @@
   "genus":"Anaxyrus",
   "species":"monfontanus",
   "common_name":"Hot Creek Toad",
-  "synonymies":"",
+  "synonymies":"Bufo monfontanus",
   "iucn":"",
   "aweb_uid":"9158",
   "uri_guid":"https://amphibiaweb.org/species/9158"
@@ -3965,7 +3954,7 @@
   "genus":"Anaxyrus",
   "species":"nevadensis",
   "common_name":"Railroad Valley Toad",
-  "synonymies":"",
+  "synonymies":"Bufo nevadensis",
   "iucn":"",
   "aweb_uid":"9157",
   "uri_guid":"https://amphibiaweb.org/species/9157"
@@ -4031,7 +4020,7 @@
   "genus":"Anaxyrus",
   "species":"williamsi",
   "common_name":"Dixie Valley Toad",
-  "synonymies":"",
+  "synonymies":"Bufo williamsi",
   "iucn":"",
   "aweb_uid":"8649",
   "uri_guid":"https://amphibiaweb.org/species/8649"
@@ -4042,7 +4031,7 @@
   "genus":"Anaxyrus",
   "species":"woodhousii",
   "common_name":"Woodhouse's Toad, Southwestern Woodhouse's Toad (<i>B. w. australis</i>), East Texas Toad (<i>B. w. velatus</i>), Rocky Mountain Toad or Woodhouse's Toad (<i>B. w. woodhousii</i>),",
-  "synonymies":"Anaxyrus woodhousii woodhousii",
+  "synonymies":"Anaxyrus woodhousii woodhousii, Bufo woodhousii woodhousii",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"314",
   "uri_guid":"https://amphibiaweb.org/species/314"
@@ -6550,7 +6539,7 @@
   "genus":"Incilius",
   "species":"aucoinae",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo aucoinae",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"6409",
   "uri_guid":"https://amphibiaweb.org/species/6409"
@@ -6561,7 +6550,7 @@
   "genus":"Incilius",
   "species":"aurarius",
   "common_name":"Cuchumatan Golden Toad",
-  "synonymies":"",
+  "synonymies":"Bufo aurarius",
   "iucn":"",
   "aweb_uid":"7956",
   "uri_guid":"https://amphibiaweb.org/species/7956"
@@ -6616,7 +6605,7 @@
   "genus":"Incilius",
   "species":"chompipe",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo chompipe",
   "iucn":"Vulnerable (VU)",
   "aweb_uid":"6908",
   "uri_guid":"https://amphibiaweb.org/species/6908"
@@ -6704,7 +6693,7 @@
   "genus":"Incilius",
   "species":"guanacaste",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo guanacaste",
   "iucn":"Data Deficient (DD)",
   "aweb_uid":"6909",
   "uri_guid":"https://amphibiaweb.org/species/6909"
@@ -6792,7 +6781,7 @@
   "genus":"Incilius",
   "species":"majordomus",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo majordomus",
   "iucn":"",
   "aweb_uid":"7995",
   "uri_guid":"https://amphibiaweb.org/species/7995"
@@ -6902,7 +6891,7 @@
   "genus":"Incilius",
   "species":"pisinnus",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo pisinnus",
   "iucn":"Data Deficient (DD)",
   "aweb_uid":"6613",
   "uri_guid":"https://amphibiaweb.org/species/6613"
@@ -6913,7 +6902,7 @@
   "genus":"Incilius",
   "species":"porteri",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo porteri",
   "iucn":"Data Deficient (DD)",
   "aweb_uid":"6614",
   "uri_guid":"https://amphibiaweb.org/species/6614"
@@ -6924,7 +6913,7 @@
   "genus":"Incilius",
   "species":"signifer",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Bufo signifer",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"6615",
   "uri_guid":"https://amphibiaweb.org/species/6615"
@@ -9806,7 +9795,7 @@
   "genus":"Sclerophrys",
   "species":"arabica",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Amietophrynus arabica",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"104",
   "uri_guid":"https://amphibiaweb.org/species/104"
@@ -9817,7 +9806,7 @@
   "genus":"Sclerophrys",
   "species":"asmarae",
   "common_name":"",
-  "synonymies":"Bufo asmarae",
+  "synonymies":"Bufo asmarae, Amietophrynus asmarae",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"109",
   "uri_guid":"https://amphibiaweb.org/species/109"
@@ -9828,7 +9817,7 @@
   "genus":"Sclerophrys",
   "species":"blanfordii",
   "common_name":"",
-  "synonymies":"Bufo blanfordii",
+  "synonymies":"Bufo blanfordii, Amietophrynus blanfordii",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"119",
   "uri_guid":"https://amphibiaweb.org/species/119"
@@ -9839,7 +9828,7 @@
   "genus":"Sclerophrys",
   "species":"brauni",
   "common_name":"",
-  "synonymies":"Bufo brauni",
+  "synonymies":"Bufo brauni, Amietophrynus brauni",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"123",
   "uri_guid":"https://amphibiaweb.org/species/123"
@@ -9861,7 +9850,7 @@
   "genus":"Sclerophrys",
   "species":"camerunensis",
   "common_name":"",
-  "synonymies":"Bufo camerunensis",
+  "synonymies":"Bufo camerunensis, Amietophrynus camerunensis",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"133",
   "uri_guid":"https://amphibiaweb.org/species/133"
@@ -9872,7 +9861,7 @@
   "genus":"Sclerophrys",
   "species":"capensis",
   "common_name":"Ranger's Toad",
-  "synonymies":"Bufo rangeri, Bufo regularis rangeri",
+  "synonymies":"Bufo rangeri, Bufo regularis rangeri, Amietophrynus rangeri",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"266",
   "uri_guid":"https://amphibiaweb.org/species/266"
@@ -9883,7 +9872,7 @@
   "genus":"Sclerophrys",
   "species":"channingi",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Amietophrynus channingi",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"7630",
   "uri_guid":"https://amphibiaweb.org/species/7630"
@@ -9894,7 +9883,7 @@
   "genus":"Sclerophrys",
   "species":"chudeaui",
   "common_name":"Bata Marsh Toad",
-  "synonymies":"Bufo chudeaui",
+  "synonymies":"Bufo chudeaui, Amietophrynus chudeaui",
   "iucn":"Data Deficient (DD)",
   "aweb_uid":"142",
   "uri_guid":"https://amphibiaweb.org/species/142"
@@ -9938,7 +9927,7 @@
   "genus":"Sclerophrys",
   "species":"dodsoni",
   "common_name":"Dodson's Toad, dufda 'a 'ilba",
-  "synonymies":"",
+  "synonymies":"Amietophrynus dodsoni",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"163",
   "uri_guid":"https://amphibiaweb.org/species/163"
@@ -9982,7 +9971,7 @@
   "genus":"Sclerophrys",
   "species":"gracilipes",
   "common_name":"",
-  "synonymies":"Bufo gracilipes",
+  "synonymies":"Bufo gracilipes, Amietophrynus gracilipes",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"185",
   "uri_guid":"https://amphibiaweb.org/species/185"
@@ -10092,7 +10081,7 @@
   "genus":"Sclerophrys",
   "species":"pantherina",
   "common_name":"Western Leopard Toad",
-  "synonymies":"Bufo pantherinus, Bufo cruciger",
+  "synonymies":"Bufo pantherinus, Bufo cruciger, Amietophrynus pantherinus",
   "iucn":"Endangered (EN)",
   "aweb_uid":"246",
   "uri_guid":"https://amphibiaweb.org/species/246"
@@ -10103,7 +10092,7 @@
   "genus":"Sclerophrys",
   "species":"pardalis",
   "common_name":"Leopard Toad",
-  "synonymies":"Bufo pardalis, Bufo regularis pardalis",
+  "synonymies":"Bufo pardalis, Bufo regularis pardalis, Amietophrynus pardalis",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"248",
   "uri_guid":"https://amphibiaweb.org/species/248"
@@ -10147,7 +10136,7 @@
   "genus":"Sclerophrys",
   "species":"pusilla",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Amietophrynus pusilla",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"8467",
   "uri_guid":"https://amphibiaweb.org/species/8467"
@@ -10213,7 +10202,7 @@
   "genus":"Sclerophrys",
   "species":"tihamica",
   "common_name":"",
-  "synonymies":"",
+  "synonymies":"Amietophrynus tihamica",
   "iucn":"Least Concern (LC)",
   "aweb_uid":"294",
   "uri_guid":"https://amphibiaweb.org/species/294"
@@ -16294,6 +16283,17 @@
   "order":"Anura",
   "family":"Dendrobatidae",
   "genus":"Anomaloglossus",
+  "species":"saramaka",
+  "common_name":"",
+  "synonymies":"",
+  "iucn":"",
+  "aweb_uid":"9240",
+  "uri_guid":"https://amphibiaweb.org/species/9240"
+ },
+ {
+  "order":"Anura",
+  "family":"Dendrobatidae",
+  "genus":"Anomaloglossus",
   "species":"shrevei",
   "common_name":"",
   "synonymies":"Colostethus shrevei",
@@ -16366,6 +16366,17 @@
   "iucn":"Data Deficient (DD)",
   "aweb_uid":"6425",
   "uri_guid":"https://amphibiaweb.org/species/6425"
+ },
+ {
+  "order":"Anura",
+  "family":"Dendrobatidae",
+  "genus":"Anomaloglossus",
+  "species":"vacheri",
+  "common_name":"",
+  "synonymies":"",
+  "iucn":"",
+  "aweb_uid":"9241",
+  "uri_guid":"https://amphibiaweb.org/species/9241"
  },
  {
   "order":"Anura",
@@ -43156,17 +43167,6 @@
   "order":"Anura",
   "family":"Mantellidae",
   "genus":"Gephyromantis",
-  "species":"azzurrae",
-  "common_name":"",
-  "synonymies":"",
-  "iucn":"Endangered (EN)",
-  "aweb_uid":"6985",
-  "uri_guid":"https://amphibiaweb.org/species/6985"
- },
- {
-  "order":"Anura",
-  "family":"Mantellidae",
-  "genus":"Gephyromantis",
   "species":"blanci",
   "common_name":"",
   "synonymies":"Mantidactylus blanci",
@@ -43213,7 +43213,7 @@
   "genus":"Gephyromantis",
   "species":"corvus",
   "common_name":"",
-  "synonymies":"Mantidactylus corvus",
+  "synonymies":"Mantidactylus corvus, Gephyromantis azzurrae",
   "iucn":"Endangered (EN)",
   "aweb_uid":"4589",
   "uri_guid":"https://amphibiaweb.org/species/4589"
@@ -43294,6 +43294,17 @@
   "iucn":"Vulnerable (VU)",
   "aweb_uid":"4604",
   "uri_guid":"https://amphibiaweb.org/species/4604"
+ },
+ {
+  "order":"Anura",
+  "family":"Mantellidae",
+  "genus":"Gephyromantis",
+  "species":"kintana",
+  "common_name":"",
+  "synonymies":"",
+  "iucn":"",
+  "aweb_uid":"9242",
+  "uri_guid":"https://amphibiaweb.org/species/9242"
  },
  {
   "order":"Anura",
@@ -73808,6 +73819,17 @@
   "iucn":"Least Concern (LC)",
   "aweb_uid":"2847",
   "uri_guid":"https://amphibiaweb.org/species/2847"
+ },
+ {
+  "order":"Anura",
+  "family":"Strabomantidae",
+  "genus":"Pristimantis",
+  "species":"chocoensis",
+  "common_name":"Choco’s robber frog",
+  "synonymies":"",
+  "iucn":"",
+  "aweb_uid":"9239",
+  "uri_guid":"https://amphibiaweb.org/species/9239"
  },
  {
   "order":"Anura",
