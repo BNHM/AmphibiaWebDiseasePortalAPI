@@ -83,14 +83,14 @@ def fetch_data():
 
 # function to grab latest amphibiaweb taxonomy
 def fetchAmphibianTaxonomy():
-    # TODO fetch from URL.  When i implement this i can remove the JSON file below...
-    #url="https://amphibiaweb.org/amphib_names.json"
-    #r = requests.get(url)
-    #return json.loads(r.content)
+    # fetch from URL
+    url="https://amphibiaweb.org/amphib_names.json"
+    r = requests.get(url)
+    return json.loads(r.content)
 
     # Opening JSON file.  Temporary!
-    f = open('amphib_names.json',) 
-    return json.load(f) 
+    #f = open('amphib_names.json',) 
+    #return json.load(f) 
 
 # update taxonomic fields using amphibiaweb taxonomy
 # updates scientificName using synonyms 
