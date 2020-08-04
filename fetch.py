@@ -4,6 +4,8 @@ import json
 import xlrd
 import pandas as pd
 import urllib.request
+from io import TextIOWrapper
+from gzip import GzipFile
 
 # hold scientificName objects which 
 class scientificNames:
@@ -79,7 +81,22 @@ def fetch_data():
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
     SamplesDFOutput = df.reindex(columns=columns)
     api.write("|"+processed_csv_filename_zipped+"|Zipped version of all core metadata fields for every public project|\n")
-    SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False, compression="gzip")                                            
+    #SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False)                                            
+    to_gzip_csv_no_timestamp(SamplesDFOutput,processed_csv_filename_zipped)
+    
+def to_gzip_csv_no_timestamp(df, f, *kwargs):
+    # Write pandas DataFrame to a .csv.gz file, without a timestamp in the archive
+    # header, using GzipFile and TextIOWrapper.
+    #
+    # Args:
+    #     df: pandas DataFrame.
+    #     f: Filename string ending in .csv (not .csv.gz).
+    #     *kwargs: Other arguments passed to to_csv().
+    #
+    # Returns:
+    #     Nothing.
+    with TextIOWrapper(GzipFile(f, 'w', mtime=0), encoding='utf-8') as fd:
+        df.to_csv(fd, *kwargs)
 
 # function to grab latest amphibiaweb taxonomy
 def fetchAmphibianTaxonomy():
