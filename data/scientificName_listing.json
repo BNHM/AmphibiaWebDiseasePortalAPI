@@ -54,6 +54,7 @@
 	{"scientificName" : "Atelopus chiriquiensis" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "255" , "count" : 39}]},
 	{"scientificName" : "Atelopus elegans" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "286" , "count" : 3}]},
 	{"scientificName" : "Atelopus nanay" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "286" , "count" : 2}]},
+	{"scientificName" : "Atelopus patazensis" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "319" , "count" : 7}]},
 	{"scientificName" : "Atelopus senex" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "255" , "count" : 30}]},
 	{"scientificName" : "Atelopus varius" , "order" : "Anura" , "family" : "Bufonidae", "associatedProjects" : [{"projectId" : "255" , "count" : 30},{"projectId" : "286" , "count" : 1}]},
 	{"scientificName" : "Atympanophrys gigantica" , "order" : "Anura" , "family" : "Megophryidae", "associatedProjects" : [{"projectId" : "241" , "count" : 2}]},
