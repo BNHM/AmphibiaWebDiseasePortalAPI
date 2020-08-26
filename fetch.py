@@ -2,6 +2,7 @@
 import requests, zipfile, io, sys
 import json
 import xlrd
+import numpy as np
 import pandas as pd
 import urllib.request
 from io import TextIOWrapper
@@ -49,29 +50,36 @@ def fetch_data():
                 print("processing data for project = " + str(project["projectId"]))
                 
                 temp_file = 'data/project' + str(project["projectId"]) + ".xlsx"                
+                
                 excel_file_url = json.loads(r.content)['url']
+                
                 urllib.request.urlretrieve(excel_file_url, temp_file)
-                thisDF = pd.read_excel(temp_file,sheet_name='Samples')                                
+                           
+                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False)                                
+    
                 thisDF = thisDF.reindex(columns=columns)
+                
+                thisDF = thisDF.replace(np.nan, '', regex=True) 
+
                 thisDF = thisDF.astype(str)
+                
+                # normalize true/false to all upper case
+                thisDF['diseaseDetected'] = thisDF['diseaseDetected'].str.upper() 
+                thisDF['fatal'] = thisDF['fatal'].str.upper() 
                 thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize() 
                 
-                # remove unknown specificEpithet's
+                # process names
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.','')
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp','')
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf','') 
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf.','')
-                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')            
-            
-           
+                thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')                            
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
                 thisDF['scientificName'] = thisDF['scientificName'].str.strip()
-
                 thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
-
                 thisDF = taxonomize(thisDF)
-                thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)
                 
+                thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)                
                     
                 df = df.append(thisDF,sort=False)
      
@@ -83,6 +91,33 @@ def fetch_data():
     api.write("|"+processed_csv_filename_zipped+"|Zipped version of all core metadata fields for every public project|\n")
     #SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False)                                            
     to_gzip_csv_no_timestamp(SamplesDFOutput,processed_csv_filename_zipped)
+  
+def test_data_writing():
+    in_file = 'data/project221.xlsx'
+    out_file = 'data/temp.xlsx'
+    thisDF = pd.read_excel(in_file,sheet_name='Samples',na_filter=False)                                
+    thisDF = thisDF.reindex(columns=columns)    
+    thisDF = thisDF.replace(np.nan, '', regex=True) 
+    thisDF = thisDF.astype(str)
+    
+    thisDF['diseaseDetected'] = thisDF['diseaseDetected'].str.upper()                 
+    thisDF['fatal'] = thisDF['fatal'].str.upper()                 
+    # remove unknown specificEpithet's
+    thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.','')
+    thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp','')
+    thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf','') 
+    thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf.','')
+    thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')            
+            
+           
+    thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
+    thisDF['scientificName'] = thisDF['scientificName'].str.strip()
+
+    thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()  
+                
+    thisDF = taxonomize(thisDF)
+    thisDF.to_excel(out_file,index=False)    
+
     
 def to_gzip_csv_no_timestamp(df, f, *kwargs):
     # Write pandas DataFrame to a .csv.gz file, without a timestamp in the archive
@@ -349,10 +384,84 @@ api.write("|filename|definition|\n")
 api.write("|----|---|\n")
 
 # global variables
-columns = ['materialSampleID','diseaseTested','diseaseDetected','order','family','genus','specificEpithet','country','decimalLatitude','decimalLongitude','yearCollected','projectId']
+#columns = ['materialSampleID','diseaseTested','diseaseDetected','order','family','genus','specificEpithet','country','decimalLatitude','decimalLongitude','yearCollected','projectId']
+columns = [
+'materialSampleID',
+'diseaseTested',
+'diseaseDetected',
+'principalInvestigator',
+'country',
+'decimalLatitude',
+'decimalLongitude',
+'locality',
+'yearCollected',
+'coordinateUncertaintyInMeters',
+'collectorList',
+'basisOfRecord',
+'order',
+'family',
+'genus',
+'specificEpithet',
+'sampleType',
+'fatal',
+'Default Group',
+'continentOcean',
+'stateProvince',
+'municipality',
+'county',
+'locationRemarks',
+'verbatimEventDate',
+'monthCollected',
+'dayCollected',
+'horizontalDatum',
+'georeferenceProtocol',
+'minimumElevationInMeters',
+'maximumElevationInMeters',
+'minimumDepthInMeters',
+'maximumDepthInMeters',
+'locationID',
+'habitat',
+'eventRemarks',
+'Record and Owner Details',
+'occurrenceID',
+'institutionCode',
+'collectionCode',
+'catalogNumber',
+'otherCatalogNumbers',
+'fieldNumber',
+'associatedReferences',
+'occurrenceRemarks',
+'Taxonomy and Life History',
+'infraspecificEpithet',
+'taxonRemarks',
+'lifeStage',
+'establishmentMeans',
+'sex',
+'Protocol and Storage Details',
+'individualCount',
+'Measurements',
+'weightUnits',
+'weight',
+'lengthUnits',
+'length',
+'Diagnostics and Traits',
+'diseaseLineage',
+'genotypeMethod',
+'testMethod',
+'diseaseTestedPositiveCount',
+'specimenDisposition',
+'quantityDetected',
+'dilutionFactor',
+'cycleTimeFirstDetection',
+'zeScore',
+'diagnosticLab',
+'projectId'
+]
+
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
+#test_data_writing()
 fetch_data()
 group_data()
 
