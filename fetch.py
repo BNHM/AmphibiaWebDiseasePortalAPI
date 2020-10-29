@@ -10,11 +10,12 @@ from gzip import GzipFile
 
 # hold scientificName objects which 
 class scientificNames:
-    def __init__(self, name, family, order):  
+    def __init__(self, name, family, order, verbatim):  
         self.name = name  
         self.projects = list()
         self.family = family
         self.order = order
+        self.verbatim = verbatim
     def add_project(self, projectCounter):
         self.projects.append(projectCounter) 
         
@@ -76,7 +77,10 @@ def fetch_data():
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')                            
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
                 thisDF['scientificName'] = thisDF['scientificName'].str.strip()
-                thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()                 
+                thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()
+                # set the verbatim name before running taxonomize
+                thisDF['verbatimScientificName'] = thisDF['scientificName']                 
+                 
                 thisDF = taxonomize(thisDF)
                 
                 thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)                
@@ -241,7 +245,7 @@ def json_tuple_writer_scientificName_listing(group,name,df):
     jsonstr = ''
     firsttime = True
     scientificNameList = list()
-    s = scientificNames('','','')
+    s = scientificNames('','','','')
     
     # loop all grouped names & projects and populate list of objects
     # from these we will construct JSONS downstream
@@ -250,14 +254,16 @@ def json_tuple_writer_scientificName_listing(group,name,df):
         thisfamily = str(indx[1])
         thisorder = str(indx[2])
         projectId = str(indx[3])
+        thisverbatimScientificName = str(indx[4])
+
         count = str(val)                              
         if (scientificName != thisscientificName): 
             if firsttime:
-                s = scientificNames(thisscientificName,thisfamily,thisorder)             
+                s = scientificNames(thisscientificName,thisfamily,thisorder,thisverbatimScientificName)             
                 s.add_project(projectCounter(projectId,count)) 
             else:    
                 scientificNameList.append(s)
-                s = scientificNames(thisscientificName,thisfamily,thisorder)       
+                s = scientificNames(thisscientificName,thisfamily,thisorder,thisverbatimScientificName)       
                 s.add_project(projectCounter(projectId,count))                                                       
         else:
             s.add_project(projectCounter(projectId,count))         
@@ -270,6 +276,8 @@ def json_tuple_writer_scientificName_listing(group,name,df):
         jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , ")
         jsonstr += ("\"order\" : \"" + sciName.order + "\" , ")
         jsonstr += ("\"family\" : \"" + sciName.family + "\", ")
+        jsonstr += ("\"verbatimScientificName\" : \"" + sciName.verbatim + "\", ")
+
 
         jsonstr += ("\"associatedProjects\" : [" )
         for project in sciName.projects:
@@ -373,7 +381,7 @@ def group_data():
     json_tuple_writer_scientificName_projectId(group,'projectId')
     
     # scientificName listing
-    group = df.groupby(['scientificName','family','order','projectId']).size()
+    group = df.groupby(['scientificName','family','order','projectId','verbatimScientificName']).size()
     json_tuple_writer_scientificName_listing(group,'scientificName',df)
 
 
@@ -462,7 +470,7 @@ processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
 #test_data_writing()
-fetch_data()
+#fetch_data()
 group_data()
 
 api.close()
