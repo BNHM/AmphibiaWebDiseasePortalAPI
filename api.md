@@ -3,6 +3,7 @@
 Amphibian Disease Portal API Documentation.  The following files are updated every evening and can be called directly by pointing to their raw form in this github repository.
 |filename|definition|
 |----|---|
+|data/amphibian_disease_data_processed.csv.gz|Zipped version of all core metadata fields for every public project|
 |data/genus_Both.json|Bd and Bsal counts grouped by genus|
 |data/genus_Bd.json|Bd counts grouped by genus|
 |data/genus_Bsal.json|Bsal counts grouped by genus|
@@ -52,3 +53,5 @@ Amphibian Disease Portal API Documentation.  The following files are updated eve
 |data/scientificName_projectId_292.json|unique scientificName count for project 292|
 |data/scientificName_projectId_295.json|unique scientificName count for project 295|
 |data/scientificName_projectId_319.json|unique scientificName count for project 319|
+|data/scientificName_projectId_354.json|unique scientificName count for project 354|
+|scientificName_listing.json|All scientific names and the projects that they appear in|

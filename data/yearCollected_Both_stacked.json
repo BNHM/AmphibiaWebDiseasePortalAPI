@@ -110,10 +110,12 @@
 	{"yearCollected":"2011","Bd":200},
 	{"yearCollected":"2012","Bd":619},
 	{"yearCollected":"2013","Bd":1013,"Bsal":134},
-	{"yearCollected":"2014","Bd":337,"Bsal":279},
-	{"yearCollected":"2015","Bd":622,"Bsal":420},
-	{"yearCollected":"2016","Bd":100,"Bsal":7338},
-	{"yearCollected":"2017","Bd":122,"Bsal":3583},
-	{"yearCollected":"2018","Bd":5},
+	{"yearCollected":"2014","Bd":337,"Bsal":300},
+	{"yearCollected":"2015","Bd":622,"Bsal":669},
+	{"yearCollected":"2016","Bd":100,"Bsal":7690},
+	{"yearCollected":"2017","Bd":122,"Bsal":4836},
+	{"yearCollected":"2018","Bd":5,"Bd+bsal":6,"Bsal":1592},
+	{"yearCollected":"2019","Bd+bsal":4,"Bsal":2455},
+	{"yearCollected":"2020","Bsal":45},
 	{"yearCollected":"unknown","Bd":48}
 ]

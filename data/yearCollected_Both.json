@@ -110,10 +110,12 @@
 	{"yearCollected":"2011","value":200},
 	{"yearCollected":"2012","value":619},
 	{"yearCollected":"2013","value":1147},
-	{"yearCollected":"2014","value":616},
-	{"yearCollected":"2015","value":1042},
-	{"yearCollected":"2016","value":7438},
-	{"yearCollected":"2017","value":3705},
-	{"yearCollected":"2018","value":5},
+	{"yearCollected":"2014","value":637},
+	{"yearCollected":"2015","value":1291},
+	{"yearCollected":"2016","value":7790},
+	{"yearCollected":"2017","value":4958},
+	{"yearCollected":"2018","value":1603},
+	{"yearCollected":"2019","value":2459},
+	{"yearCollected":"2020","value":45},
 	{"yearCollected":"unknown","value":48}
 ]

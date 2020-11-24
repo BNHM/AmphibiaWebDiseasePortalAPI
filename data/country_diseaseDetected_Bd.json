@@ -15,6 +15,7 @@
 	{"country":"Ethiopia","True":1},
 	{"country":"France","True":5},
 	{"country":"Gabon","False":378,"True":85},
+	{"country":"Germany","False":5,"True":5},
 	{"country":"Guatemala","True":3},
 	{"country":"Honduras","True":19},
 	{"country":"Hungary","True":1},

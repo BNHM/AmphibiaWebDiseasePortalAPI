@@ -1,7 +1,10 @@
 [
 	{"yearCollected":"2013","False":134},
-	{"yearCollected":"2014","False":279},
-	{"yearCollected":"2015","False":420},
-	{"yearCollected":"2016","False":7338},
-	{"yearCollected":"2017","False":3583}
+	{"yearCollected":"2014","False":300},
+	{"yearCollected":"2015","False":647,"True":22},
+	{"yearCollected":"2016","False":7686,"True":4},
+	{"yearCollected":"2017","False":4788,"True":48},
+	{"yearCollected":"2018","False":1527,"True":65},
+	{"yearCollected":"2019","False":2268,"True":187},
+	{"yearCollected":"2020","False":28,"True":17}
 ]

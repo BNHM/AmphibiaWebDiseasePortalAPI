@@ -470,7 +470,7 @@ processed_filename = 'data/amphibian_disease_data_processed.xlsx'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
 #test_data_writing()
-#fetch_data()
+fetch_data()
 group_data()
 
 api.close()
