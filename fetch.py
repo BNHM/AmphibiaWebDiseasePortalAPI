@@ -40,7 +40,7 @@ def fetch_data():
         # filter for just projects matching the teamID
         if (projectConfigurationID == amphibianDiseaseTeamID):
         # condition for testing a single project
-        #if (project["projectId"] == 255):
+        #if (project["projectId"] == 249):
             
             url="https://api.geome-db.org/records/Event/excel?networkId=1&q=_projects_:" + str(project["projectId"]) + "+_select_:%5BSample,Diagnostics%5D"
             r = requests.get(url)
@@ -49,6 +49,9 @@ def fetch_data():
                 print ('no data found for project = ' + str(project["projectId"]))
             else:
                 print("processing data for project = " + str(project["projectId"]))
+
+                #TODO
+                print(project)
                 
                 temp_file = 'data/project' + str(project["projectId"]) + ".xlsx"                
                 
