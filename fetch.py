@@ -38,7 +38,7 @@ def fetch_data():
     for project in json.loads(r.content):
         projectConfigurationID = project["projectConfiguration"]["id"]
         # filter for just projects matching the teamID
-        if (projectConfigurationID == amphibianDiseaseTeamID):
+        if (projectConfigurationID == amphibianDiseaseTeamID and project["public"]):
         # condition for testing a single project
         #if (project["projectId"] == 249):
             
@@ -50,9 +50,6 @@ def fetch_data():
             else:
                 print("processing data for project = " + str(project["projectId"]))
 
-                #TODO
-                print(project)
-                
                 temp_file = 'data/project' + str(project["projectId"]) + ".xlsx"                
                 
                 excel_file_url = json.loads(r.content)['url']
