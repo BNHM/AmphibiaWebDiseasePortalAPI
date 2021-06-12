@@ -52,6 +52,7 @@ Amphibian Disease Portal API Documentation.  The following files are updated eve
 |data/scientificName_projectId_290.json|unique scientificName count for project 290|
 |data/scientificName_projectId_292.json|unique scientificName count for project 292|
 |data/scientificName_projectId_295.json|unique scientificName count for project 295|
+|data/scientificName_projectId_300.json|unique scientificName count for project 300|
 |data/scientificName_projectId_319.json|unique scientificName count for project 319|
 |data/scientificName_projectId_354.json|unique scientificName count for project 354|
 |data/scientificName_projectId_365.json|unique scientificName count for project 365|
