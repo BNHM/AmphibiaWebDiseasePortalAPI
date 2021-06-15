@@ -2419,7 +2419,7 @@
 	{"scientificName" : "Rhinella proboscidea" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella proboscidea", "associatedProjects" : [{"projectId" : "300" , "count" : 1}]},
 	{"scientificName" : "Rhinella quechua" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella quechua", "associatedProjects" : [{"projectId" : "300" , "count" : 12}]},
 	{"scientificName" : "Rhinella rubescens" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella rubescens", "associatedProjects" : [{"projectId" : "300" , "count" : 2}]},
-	{"scientificName" : "Rhinella sp. "typhonius" group" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella sp. "typhonius" group", "associatedProjects" : [{"projectId" : "300" , "count" : 1}]},
+	{"scientificName" : "Rhinella sp. typhonius group" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella sp. "typhonius" group", "associatedProjects" : [{"projectId" : "300" , "count" : 1}]},
 	{"scientificName" : "Rhinella spinulosa" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella spinulosa", "associatedProjects" : [{"projectId" : "300" , "count" : 82}]},
 	{"scientificName" : "Rhinella sternosignata" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella sternosignata", "associatedProjects" : [{"projectId" : "300" , "count" : 1}]},
 	{"scientificName" : "Rhinella veraguensis" , "order" : "Anura" , "family" : "Bufonidae", "verbatimScientificName" : "Rhinella veraguensis", "associatedProjects" : [{"projectId" : "300" , "count" : 26}]},

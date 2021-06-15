@@ -187,11 +187,11 @@ def json_tuple_writer(group,name,filename,definition):
         if (namevalue != thisnamevalue):
             jsonstr+="\t{"
             jsonstr+="\""+name+"\":\""+thisnamevalue+"\","
-            jsonstr+="\""+str(indx[1])+"\":"+str(val)  
+            jsonstr+="\""+str(indx[1]).replace('"',"") +"\":"+str(val)  
             jsonstr+="},\n"                   
         else:
             jsonstr = jsonstr.rstrip("},\n")
-            jsonstr+=",\""+str(indx[1])+"\":"+str(val)  
+            jsonstr+=",\""+str(indx[1]).replace('"',"") +"\":"+str(val)  
             jsonstr+="},\n"                           
         
         namevalue = thisnamevalue                
@@ -222,7 +222,7 @@ def json_tuple_writer_scientificName_projectId(group,name):
                     f.write(jsonstr)                      
             # Beginning of file
             jsonstr = "[\n"
-            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]) + "\",\"value\":"+str(val) +"},\n" )
+            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]).replace('"',"") + "\",\"value\":"+str(val) +"},\n" )
 
             api.write("|data/scientificName_projectId_"+thisprojectId +".json|unique scientificName count for project "+thisprojectId+"|\n")                
         else:                                    
@@ -275,7 +275,7 @@ def json_tuple_writer_scientificName_listing(group,name,df):
     # construct JSON output
     jsonstr = ("[\n")
     for sciName in scientificNameList:                
-        jsonstr += ("\t{\"scientificName\" : \"" + sciName.name + "\" , ")
+        jsonstr += ("\t{\"scientificName\" : \"" + sciName.name.replace('"',"") + "\" , ")
         jsonstr += ("\"order\" : \"" + sciName.order + "\" , ")
         jsonstr += ("\"family\" : \"" + sciName.family + "\", ")
         jsonstr += ("\"verbatimScientificName\" : \"" + sciName.verbatim + "\", ")
@@ -300,7 +300,7 @@ def json_writer(group,name,filename,definition):
     jsonstr = '[\n'
     for (rownum,val) in enumerate(group.iteritems()):                        
         jsonstr+="\t{"
-        jsonstr+="\""+name+"\":\""+str(val[0])+"\","            
+        jsonstr+="\""+name+"\":\""+str(val[0]).replace('"',"")+"\","            
         jsonstr+="\"value\":"+str(val[1])  
         jsonstr+="},\n"                   
         
