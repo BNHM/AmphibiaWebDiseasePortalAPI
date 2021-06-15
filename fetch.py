@@ -75,6 +75,8 @@ def fetch_data():
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf','') 
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('cf.','')
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.2','')                            
+                thisDF['genus'] = thisDF['genus'].str.replace(r'sp\..*', 'sp.')
+                thisDF['genus'] = thisDF['genus'].str.replace(r'sp .*', 'sp.')
                 thisDF['scientificName'] = thisDF['genus'] + " " + thisDF['specificEpithet']
                 thisDF['scientificName'] = thisDF['scientificName'].str.strip()
                 thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()
@@ -224,7 +226,7 @@ def json_tuple_writer_scientificName_projectId(group,name):
 
             api.write("|data/scientificName_projectId_"+thisprojectId +".json|unique scientificName count for project "+thisprojectId+"|\n")                
         else:                                    
-            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]) + "\",\"value\":"+str(val) +"},\n" )
+            jsonstr += ("\t{\"scientificName\":\"" + str(indx[1]).replace('"',"") + "\",\"value\":"+str(val) +"},\n" )
 
             
         projectId = thisprojectId

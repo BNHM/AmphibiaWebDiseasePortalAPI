@@ -8,7 +8,7 @@ git pull
 #https://ubuntuforums.org/showthread.php?t=983645&s=fb7898eaa14d3421dae0381af1a0d3e6&p=6188826#post6188826
 #/usr/bin/sudo -u jdeck -i python /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
 # instead, i am reverting to running as the current user
-python /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
+python3 /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
 git add -A
 git commit -m "updating based on automatic fetch process"
 git push
