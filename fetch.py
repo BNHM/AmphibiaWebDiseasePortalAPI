@@ -56,7 +56,7 @@ def fetch_data():
                 
                 urllib.request.urlretrieve(excel_file_url, temp_file)
                            
-                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False)                                
+                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False )                                
     
                 thisDF = thisDF.reindex(columns=columns)
                 
