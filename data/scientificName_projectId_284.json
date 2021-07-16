@@ -1,6 +1,8 @@
 [
+	{"scientificName":"Anaxyrus americanus","value":2},
 	{"scientificName":"Eurycea cirrigera","value":14},
-	{"scientificName":"Na na","value":8},
-	{"scientificName":"Notophthalmus viridescens","value":130},
-	{"scientificName":"Plethodon websteri","value":34}
+	{"scientificName":"Na na","value":16},
+	{"scientificName":"Notophthalmus viridescens","value":246},
+	{"scientificName":"Plethodon websteri","value":66},
+	{"scientificName":"Rana luteiventris","value":24}
 ]
