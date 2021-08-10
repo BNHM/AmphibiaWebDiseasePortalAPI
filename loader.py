@@ -113,6 +113,7 @@ class ESLoader(object):
                         "genus": {"type": "keyword"},
                         "fatal": {"type": "keyword"},
                         "habitat": {"type": "keyword"},
+                        "sampleType": {"type": "keyword"},
                         "institutionCode": {"type": "keyword"},
                         "collectionCode": {"type": "keyword"},
                         "decimalLatitude": { "type": "float" },
