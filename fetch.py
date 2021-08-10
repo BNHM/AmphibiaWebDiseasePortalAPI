@@ -48,6 +48,7 @@ def fetch_data():
 
             if (r.status_code == 204):
                 print ('no data found for project = ' + str(project["projectId"]))
+            #elif (str(project["projectId"]) =="221"):
             else:
                 print("processing data for project = " + str(project["projectId"]))
 
@@ -59,7 +60,7 @@ def fetch_data():
                 
                 print(excel_file_url)
                 #disable ssl for next request, server returning invalid cert
-                # on URL link return
+                # on URL link
                 ssl._create_default_https_context = ssl._create_unverified_context
                 urllib.request.urlretrieve(excel_file_url, temp_file)
                            
@@ -100,6 +101,8 @@ def fetch_data():
     # write to an excel file, used for later processing
     df.to_excel(processed_filename,index=False)    
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
+    df = df.reset_index() 
+    df.index.name = 'index'
     SamplesDFOutput = df.reindex(columns=columns)
     api.write("|"+processed_csv_filename_zipped+"|Zipped version of all core metadata fields for every public project|\n")
     #SamplesDFOutput.to_csv(processed_csv_filename_zipped, index=False)                                            
