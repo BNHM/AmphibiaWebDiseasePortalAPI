@@ -64,7 +64,7 @@ def fetch_data():
                 ssl._create_default_https_context = ssl._create_unverified_context
                 urllib.request.urlretrieve(excel_file_url, temp_file)
                            
-                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False )                                
+                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False, engine='xlrd')                                
     
                 thisDF = thisDF.reindex(columns=columns)
                 
@@ -111,7 +111,7 @@ def fetch_data():
 def test_data_writing():
     in_file = 'data/project221.xlsx'
     out_file = 'data/temp.xlsx'
-    thisDF = pd.read_excel(in_file,sheet_name='Samples',na_filter=False)                                
+    thisDF = pd.read_excel(in_file,sheet_name='Samples',na_filter=False, engine='xlrd')                                
     thisDF = thisDF.reindex(columns=columns)    
     thisDF = thisDF.replace(np.nan, '', regex=True) 
     thisDF = thisDF.astype(str)
@@ -357,7 +357,7 @@ def run_grouped_data(df,name):
             
 def group_data():  
     print("reading processed data ...")
-    df = pd.read_excel(processed_filename)
+    df = pd.read_excel(processed_filename, engine='xlrd')
     
     print("grouping results ...")  
     # genus, country, yearCollected results
