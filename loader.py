@@ -86,6 +86,8 @@ class ESLoader(object):
                 # pipeline code identifies null yearCollected values as 'unknown'. es_loader should be empty string
                 if (row['yearCollected'] == 'unknown'): 
                     row['yearCollected'] = ''
+                if (row['yearCollected'] == 'Unknown'): 
+                    row['yearCollected'] = ''
 
                 data.append({k: v for k, v in row.items() if v})  # remove any empty values
 
@@ -115,7 +117,7 @@ class ESLoader(object):
                         "collectionCode": {"type": "keyword"},
                         "decimalLatitude": { "type": "float" },
                         "decimalLongitude": { "type": "float" },
-                        "location": { "type": "geo_point" }                        
+                        "location": { "type": "geo_point" },                        
                         "yearCollected": {"type": "integer"},
                         "monthCollected": {"type": "integer"},
                         "specificEpithet": {"type": "text"},
@@ -141,8 +143,8 @@ index = 'amphibiandisease'
 drop_existing = True
 alias = 'amphibiandisease'
 host =  'tarly.cyverse.org:80'
+#file_location = 'test.csv'
 file_location = 'data/amphibian_disease_data_processed.csv'
-#data_dir = '/home/jdeck/data/futres/data/output/output_reasoned_csv/'
 
 loader = ESLoader(file_location, index, drop_existing, alias, host)
 loader.load()
