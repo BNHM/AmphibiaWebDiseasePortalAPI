@@ -99,7 +99,7 @@ def fetch_data():
      
     print("writing final data...")            
     # write to an excel file, used for later processing
-    df.to_excel(processed_filename,index=False)    
+    df.to_excel(processed_filename,index=False, engine='xlrd')    
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
     df = df.reset_index() 
     df.index.name = 'index'
@@ -132,7 +132,7 @@ def test_data_writing():
     thisDF['scientificName'] = thisDF['scientificName'].str.capitalize()  
                 
     thisDF = taxonomize(thisDF)
-    thisDF.to_excel(out_file,index=False)    
+    thisDF.to_excel(out_file,index=False, engine='xlrd')    
 
     
 def to_gzip_csv_no_timestamp(df, f, *kwargs):
