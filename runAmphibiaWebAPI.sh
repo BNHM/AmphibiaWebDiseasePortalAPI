@@ -12,3 +12,7 @@ python3 /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
 git add -A
 git commit -m "updating based on automatic fetch process"
 git push
+
+gunzip -c -f data/amphibian_disease_data_processed.csv.gz > data/amphibian_disease_data_processed.csv
+
+#TODO: add loader.py script once stable here
