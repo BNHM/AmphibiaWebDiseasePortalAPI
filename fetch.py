@@ -7,6 +7,7 @@ import pandas as pd
 import urllib.request
 from io import TextIOWrapper
 from gzip import GzipFile
+import ssl
 
 # hold scientificName objects which 
 class scientificNames:
@@ -52,8 +53,14 @@ def fetch_data():
 
                 temp_file = 'data/project' + str(project["projectId"]) + ".xlsx"                
                 
+                print(url)
+
                 excel_file_url = json.loads(r.content)['url']
                 
+                print(excel_file_url)
+                #disable ssl for next request, server returning invalid cert
+                # on URL link return
+                ssl._create_default_https_context = ssl._create_unverified_context
                 urllib.request.urlretrieve(excel_file_url, temp_file)
                            
                 thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False )                                
@@ -465,7 +472,8 @@ columns = [
 'cycleTimeFirstDetection',
 'zeScore',
 'diagnosticLab',
-'projectId'
+'projectId',
+'Sample_bcid'
 ]
 
 processed_filename = 'data/amphibian_disease_data_processed.xlsx'
