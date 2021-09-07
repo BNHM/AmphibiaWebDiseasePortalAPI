@@ -76,6 +76,10 @@ def fetch_data():
                 thisDF['diseaseDetected'] = thisDF['diseaseDetected'].str.upper() 
                 thisDF['fatal'] = thisDF['fatal'].str.upper() 
                 thisDF['diseaseTested'] = thisDF['diseaseTested'].str.capitalize() 
+
+                thisDF['sampleType'] = thisDF['sampleType'].replace('external Swab','swabbing')
+                thisDF['sampleType'] = thisDF['sampleType'].replace('external swab','swabbing')
+                thisDF['sampleType'] = thisDF['sampleType'].replace('Swabbing','swabbing')
                 
                 # process names
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.','')
