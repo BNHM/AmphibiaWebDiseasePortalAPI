@@ -103,7 +103,8 @@ def fetch_data():
      
     print("writing final data...")            
     # write to an excel file, used for later processing
-    df.to_excel(processed_filename,index=False, engine='xlrd')    
+    #df.to_excel(processed_filename,index=False)    
+    df.to_csv(processed_csv_filename,index=False)    
     # Create a compressed output file so people can view a limited set of columns for the complete dataset
     df = df.reset_index() 
     df.index.name = 'index'
@@ -361,7 +362,8 @@ def run_grouped_data(df,name):
             
 def group_data():  
     print("reading processed data ...")
-    df = pd.read_excel(processed_filename, engine='xlrd')
+    #df = pd.read_excel(processed_filename, engine='xlrd')
+    df = pd.read_csv(processed_csv_filename)
     
     print("grouping results ...")  
     # genus, country, yearCollected results
@@ -483,7 +485,7 @@ columns = [
 'Sample_bcid'
 ]
 
-processed_filename = 'data/amphibian_disease_data_processed.xlsx'
+processed_csv_filename = 'data/amphibian_disease_data_processed.csv'
 processed_csv_filename_zipped = 'data/amphibian_disease_data_processed.csv.gz'
 
 #test_data_writing()

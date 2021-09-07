@@ -1,8 +1,8 @@
 [
-	{"country":"Germany","FALSE":5624,"TRUE":343},
-	{"country":"Italy","FALSE":265},
-	{"country":"Mexico","FALSE":17},
-	{"country":"Peru","FALSE":131},
-	{"country":"USA","FALSE":11483},
-	{"country":"United Kingdom","FALSE":42}
+	{"country":"Germany","False":4470,"True":274,"FALSE":1154,"TRUE":69},
+	{"country":"Italy","False":265},
+	{"country":"Mexico","False":17},
+	{"country":"Peru","False":131},
+	{"country":"USA","False":11483},
+	{"country":"United Kingdom","False":42}
 ]
