@@ -9,10 +9,17 @@ git pull
 #/usr/bin/sudo -u jdeck -i python /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
 # instead, i am reverting to running as the current user
 python3 /home/jdeck/code/AmphibiaWebDiseasePortalAPI/fetch.py
-git add -A
-git commit -m "updating based on automatic fetch process"
-git push
 
-gunzip -c -f data/amphibian_disease_data_processed.csv.gz > data/amphibian_disease_data_processed.csv
+# if there is only one file then don't do anything... it is just the compressed archive
+# which we can't control its size... we want to prevent committingn every data to repo
+files=$(git ls-files -m | wc -l)
+if [ $files -ne 1 ]
+  then
+  git add -A
+  git commit -m "updating based on automatic fetch process"
+  git push
+
+  gunzip -c -f data/amphibian_disease_data_processed.csv.gz > data/amphibian_disease_data_processed.csv
+fi
 
 #TODO: add loader.py script once stable here
