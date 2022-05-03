@@ -80,6 +80,7 @@ def fetch_data():
                 thisDF['sampleType'] = thisDF['sampleType'].replace('external Swab','swabbing')
                 thisDF['sampleType'] = thisDF['sampleType'].replace('external swab','swabbing')
                 thisDF['sampleType'] = thisDF['sampleType'].replace('Swabbing','swabbing')
+                thisDF['sampleType'] = thisDF['sampleType'].replace('Other','other')
                 
                 # process names
                 thisDF['specificEpithet'] = thisDF['specificEpithet'].replace('sp.','')
