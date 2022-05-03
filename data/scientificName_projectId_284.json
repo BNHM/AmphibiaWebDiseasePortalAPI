@@ -1,8 +1,13 @@
 [
-	{"scientificName":"Anaxyrus americanus","value":2},
-	{"scientificName":"Eurycea cirrigera","value":14},
-	{"scientificName":"Na na","value":16},
-	{"scientificName":"Notophthalmus viridescens","value":246},
+	{"scientificName":"Anaxyrus americanus","value":21},
+	{"scientificName":"Anaxyrus fowleri","value":2},
+	{"scientificName":"Eurycea cirrigera","value":22},
+	{"scientificName":"Eurycea lucifuga","value":4},
+	{"scientificName":"Na na","value":18},
+	{"scientificName":"Notophthalmus viridescens","value":252},
+	{"scientificName":"Plethodon dorsalis","value":19},
 	{"scientificName":"Plethodon websteri","value":66},
+	{"scientificName":"Pseudotriton ruber","value":2},
+	{"scientificName":"Rana clamitans","value":2},
 	{"scientificName":"Rana luteiventris","value":24}
 ]
