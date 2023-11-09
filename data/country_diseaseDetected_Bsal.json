@@ -1,8 +1,9 @@
 [
+	{"country":"Canada","False":20,"FALSE":19},
 	{"country":"Germany","False":4470,"True":274,"FALSE":1154,"TRUE":69},
-	{"country":"Italy","False":265},
-	{"country":"Mexico","False":17},
-	{"country":"Peru","False":131},
-	{"country":"USA","False":11556},
+	{"country":"Italy","FALSE":265},
+	{"country":"Mexico","False":17,"FALSE":499},
+	{"country":"Peru","FALSE":131},
+	{"country":"USA","False":6469,"FALSE":5956},
 	{"country":"United Kingdom","False":42}
 ]

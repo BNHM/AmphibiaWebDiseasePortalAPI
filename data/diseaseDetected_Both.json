@@ -1,8 +1,8 @@
 [
-	{"diseaseDetected":"False","value":33450},
-	{"diseaseDetected":"True","value":3560},
-	{"diseaseDetected":"FALSE","value":23887},
-	{"diseaseDetected":"NO_CONFIDENCE","value":26},
-	{"diseaseDetected":"TRUE","value":8843},
+	{"diseaseDetected":"False","value":27604},
+	{"diseaseDetected":"True","value":3531},
+	{"diseaseDetected":"FALSE","value":31753},
+	{"diseaseDetected":"NO_CONFIDENCE","value":31},
+	{"diseaseDetected":"TRUE","value":9164},
 	{"diseaseDetected":"UNKNOWN","value":12}
 ]
