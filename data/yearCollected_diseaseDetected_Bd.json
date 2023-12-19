@@ -52,8 +52,8 @@
 	{"yearCollected":"2019","False":4},
 	{"yearCollected":"2020","FALSE":30,"TRUE":29},
 	{"yearCollected":"2021","FALSE":74,"TRUE":43},
-	{"yearCollected":"2022","FALSE":219,"NO_CONFIDENCE":5,"TRUE":143},
-	{"yearCollected":"2023","FALSE":155,"TRUE":78},
+	{"yearCollected":"2022","FALSE":252,"NO_CONFIDENCE":5,"TRUE":161},
+	{"yearCollected":"2023","FALSE":243,"TRUE":94},
 	{"yearCollected":"1700","FALSE":1},
 	{"yearCollected":"1835","True":1},
 	{"yearCollected":"1844","FALSE":1},
@@ -195,8 +195,8 @@
 	{"yearCollected":"2019","False":225,"True":102},
 	{"yearCollected":"2020","False":1,"True":25},
 	{"yearCollected":"2021","False":5,"True":21},
-	{"yearCollected":"2022","False":158,"True":61},
-	{"yearCollected":"2023","False":86,"True":38},
+	{"yearCollected":"2022","False":143,"True":44},
+	{"yearCollected":"2023","False":120,"True":38},
 	{"yearCollected":"Unknown","False":2,"True":3,"FALSE":30,"TRUE":23},
 	{"yearCollected":"unknown","False":7,"True":48,"FALSE":37,"TRUE":4}
 ]

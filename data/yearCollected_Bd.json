@@ -52,8 +52,8 @@
 	{"yearCollected":"2019","value":4},
 	{"yearCollected":"2020","value":59},
 	{"yearCollected":"2021","value":117},
-	{"yearCollected":"2022","value":367},
-	{"yearCollected":"2023","value":233},
+	{"yearCollected":"2022","value":418},
+	{"yearCollected":"2023","value":337},
 	{"yearCollected":"1700","value":1},
 	{"yearCollected":"1835","value":1},
 	{"yearCollected":"1844","value":1},
@@ -195,8 +195,8 @@
 	{"yearCollected":"2019","value":327},
 	{"yearCollected":"2020","value":26},
 	{"yearCollected":"2021","value":26},
-	{"yearCollected":"2022","value":219},
-	{"yearCollected":"2023","value":124},
+	{"yearCollected":"2022","value":187},
+	{"yearCollected":"2023","value":158},
 	{"yearCollected":"Unknown","value":58},
 	{"yearCollected":"unknown","value":96}
 ]

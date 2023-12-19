@@ -119,7 +119,7 @@
 	{"country":"Thailand","False":20,"FALSE":401,"TRUE":3},
 	{"country":"Trinidad and Tobago","True":1,"FALSE":20,"TRUE":7},
 	{"country":"Turkey","False":1,"FALSE":20,"TRUE":13},
-	{"country":"USA","False":13859,"True":1040,"FALSE":11211,"TRUE":3221,"UNKNOWN":4},
+	{"country":"USA","False":14192,"True":1023,"FALSE":11177,"TRUE":3255,"UNKNOWN":4},
 	{"country":"Uganda","False":1511,"True":17,"FALSE":5,"TRUE":38},
 	{"country":"United Arab Emirates","False":2,"FALSE":6},
 	{"country":"United Kingdom","False":90,"True":7,"FALSE":48,"TRUE":32},
