@@ -7,7 +7,7 @@ import urllib.request
 
 
 import elasticsearch.helpers
-from elasticsearch import Elasticsearch, RequestsHttpConnection, serializer, compat, exceptions
+from elasticsearch import Elasticsearch, RequestsHttpConnection, serializer, compat, exceptions, helpers
 
 if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)):
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -71,6 +71,7 @@ class ESLoader(object):
     def __load_file(self, file):
         doc_count = 0
         data = []
+        chunk_size = 100  # Set chunk size to 100 records
 
         with open(file) as f:
             print("Starting indexing on " + f.name)
@@ -78,24 +79,31 @@ class ESLoader(object):
 
             for row in reader:
                 # gracefully handle empty locations
-                if (row['decimalLatitude'] == '' or row['decimalLongitude'] == ''): 
+                if row['decimalLatitude'] == '' or row['decimalLongitude'] == '':
                     row['location'] = ''
                 else:
-                    row['location'] = row['decimalLatitude'] + "," + row['decimalLongitude'] 
+                    row['location'] = row['decimalLatitude'] + "," + row['decimalLongitude']
 
-                # pipeline code identifies null yearCollected values as 'unknown'. es_loader should be empty string
-                if (row['yearCollected'] == 'unknown'): 
-                    row['yearCollected'] = ''
-                if (row['yearCollected'] == 'Unknown'): 
+                # handle 'unknown' values for yearCollected
+                if row['yearCollected'].lower() == 'unknown':
                     row['yearCollected'] = ''
 
-                data.append({k: v for k, v in row.items() if v})  # remove any empty values
+                data.append({k: v for k, v in row.items() if v})  # remove empty values
 
-            elasticsearch.helpers.bulk(client=self.es, index=self.index_name, actions=data, 
-                                       raise_on_error=True, chunk_size=10000, request_timeout=60)
-            doc_count += len(data)
-            print("Indexed {} documents in {}".format(doc_count, f.name))
+                # When chunk_size is reached, send bulk data to Elasticsearch
+                if len(data) == chunk_size:
+                    helpers.bulk( client=self.es, index=self.index_name, actions=data, raise_on_error=True, request_timeout=60)
+                    doc_count += len(data)
+                    print(f"Indexed {len(data)} documents. Total indexed: {doc_count}")
+                    data = []  # Clear the data list for the next chunk
 
+            # Index remaining data if it’s less than chunk_size
+            if data:
+                helpers.bulk( client=self.es, index=self.index_name, actions=data, raise_on_error=True, request_timeout=60)
+                doc_count += len(data)
+                print(f"Indexed {len(data)} remaining documents. Total indexed: {doc_count}")
+
+        print("Finished indexing in", f.name)
         return doc_count
 
     def __create_index(self):
@@ -144,7 +152,6 @@ class ESLoader(object):
 "dayCollected": {"type":"text"},
 "verbatimEventDate": {"type":"text"},
                         "collectorList": {"type": "text"},
-                        "Sample_bcid": {"type": "text"},
 "occurrenceID": {"type":"text"},
 "otherCatalogNumbers": {"type":"text"},
 "fieldNumber": {"type":"text"},
@@ -171,7 +178,8 @@ class ESLoader(object):
 "zeScore": {"type":"text"},
 "diagnosticLab": {"type":"text"},
 "projectId": {"type":"text"},
-"projectURL": {"type":"text"}
+"projectURL": {"type":"text"},
+                        "Sample_bcid": {"type": "text"}
                     }
             }
         }
@@ -190,7 +198,7 @@ def get_files(dir, ext='csv'):
 index = 'amphibiandisease'
 drop_existing = True
 alias = 'amphibiandisease'
-host =  'tarly.cyverse.org:80'
+host =  '149.165.170.158:80'
 #file_location = 'test.csv'
 file_location = 'data/amphibian_disease_data_processed.csv'
 
