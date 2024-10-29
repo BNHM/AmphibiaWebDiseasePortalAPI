@@ -1,8 +1,6 @@
 [
-	{"diseaseDetected":"False","value":27937},
-	{"diseaseDetected":"True","value":3514},
-	{"diseaseDetected":"FALSE","value":31719},
+	{"diseaseDetected":"FALSE","value":63971},
 	{"diseaseDetected":"NO_CONFIDENCE","value":31},
-	{"diseaseDetected":"TRUE","value":9198},
+	{"diseaseDetected":"TRUE","value":13096},
 	{"diseaseDetected":"UNKNOWN","value":12}
 ]

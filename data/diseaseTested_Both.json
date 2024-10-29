@@ -1,5 +1,6 @@
 [
-	{"diseaseTested":"Bd","value":52857},
+	{"diseaseTested":"Bd","value":54651},
 	{"diseaseTested":"Bd+bsal","value":10},
-	{"diseaseTested":"Bsal","value":19544}
+	{"diseaseTested":"Bsal","value":20038},
+	{"diseaseTested":"Other","value":2411}
 ]

@@ -64,7 +64,7 @@ def fetch_data():
                 ssl._create_default_https_context = ssl._create_unverified_context
                 urllib.request.urlretrieve(excel_file_url, temp_file)
                            
-                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False, engine='xlrd')                                
+                thisDF = pd.read_excel(temp_file,sheet_name='Samples',na_filter=False, engine='openpyxl')                                
     
                 thisDF = thisDF.reindex(columns=columns)
                 
@@ -100,7 +100,9 @@ def fetch_data():
                 
                 thisDF['projectURL'] = str("https://geome-db.org/workbench/project-overview?projectId=") + thisDF['projectId'].astype(str)                
                     
-                df = df.append(thisDF,sort=False)
+                #df = df.concat(thisDF,sort=False)
+                df = pd.concat([df, thisDF], ignore_index=True, sort=False)
+
      
     print("writing final data...")            
     # write to an excel file, used for later processing
@@ -182,7 +184,8 @@ def taxonomize(df):
             for s in synonym:                  
                 synDict[s] = species['genus'] + " " + species['species']
     
-    df['scientificName'].replace(synDict, inplace=True)
+    df['scientificName'] = df['scientificName'].replace(synDict)
+    #df['scientificName'].replace(synDict, inplace=True)
     df['genus'] = df['scientificName'].str.split(" ").str[0]
     df['specificEpithet'] = df['scientificName'].str.split(" ").str[1]
     df['family'] = df['genus'].map(familyDict)
@@ -196,7 +199,7 @@ def json_tuple_writer(group,name,filename,definition):
     api.write("|"+filename+"|"+definition+"|\n")
     jsonstr = '[\n'
     namevalue = ''
-    for rownum,(indx,val) in enumerate(group.iteritems()):                
+    for rownum,(indx,val) in enumerate(group.items()):                
         
         thisnamevalue = str(indx[0])
         
@@ -226,7 +229,7 @@ def json_tuple_writer_scientificName_projectId(group,name):
     thisprojectId = ''
     jsonstr = ''
     firsttime = True
-    for rownum,(indx,val) in enumerate(group.iteritems()):  
+    for rownum,(indx,val) in enumerate(group.items()):  
         #print(str(indx[0]),str(indx[1]), str(val))              
         thisprojectId = str(indx[0])
         if (projectId != thisprojectId):
@@ -267,7 +270,7 @@ def json_tuple_writer_scientificName_listing(group,name,df):
     
     # loop all grouped names & projects and populate list of objects
     # from these we will construct JSONS downstream
-    for rownum,(indx,val) in enumerate(group.iteritems()):          
+    for rownum,(indx,val) in enumerate(group.items()):          
         thisscientificName = str(indx[0])
         thisfamily = str(indx[1])
         thisorder = str(indx[2])
@@ -314,7 +317,7 @@ def json_writer(group,name,filename,definition):
     api.write("|"+filename+"|"+definition+"|\n")
     
     jsonstr = '[\n'
-    for (rownum,val) in enumerate(group.iteritems()):                        
+    for (rownum,val) in enumerate(group.items()):                        
         jsonstr+="\t{"
         jsonstr+="\""+name+"\":\""+str(val[0]).replace('"',"")+"\","            
         jsonstr+="\"value\":"+str(val[1])  
@@ -364,7 +367,7 @@ def run_grouped_data(df,name):
 def group_data():  
     print("reading processed data ...")
     #df = pd.read_excel(processed_filename, engine='xlrd')
-    df = pd.read_csv(processed_csv_filename)
+    df = pd.read_csv(processed_csv_filename, low_memory=False)
     
     print("grouping results ...")  
     # genus, country, yearCollected results
